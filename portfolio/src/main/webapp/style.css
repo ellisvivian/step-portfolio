@@ -1,9 +1,27 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+#heading {
+    font-size: 60px;
+    text-align: center;
 }
 
-#greeting-container {
+#info-wrapper {
+    display: flex;
+}
+
+#about-me {
+    flex: 80;
+    padding: 5%;
+}
+
+#personal-links {
+    flex: 1;
+    padding: 5%;
+}
+
+#fact-container {
   margin-top: 20px;
 }
+
+#my-projects {
+    padding: 5%;
+}
+
