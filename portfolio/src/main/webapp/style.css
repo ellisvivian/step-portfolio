@@ -1,5 +1,5 @@
 #heading {
-    font-size: 60px;
+    font-size: 50px;
     text-align: center;
 }
 
@@ -8,17 +8,17 @@
 }
 
 #about-me {
-    flex: 80;
-    padding: 5%;
-}
-
-#fact-container {
-  margin-top: 20px;
+    flex: 4;
+    padding: 3%;
+    margin: 1.5% 1.5% 1.5% 3%; /* top, right, bottom, left */
+    border: solid;
 }
 
 #personal-links {
     flex: 1;
-    padding: 5%;
+    padding: 3%;
+    margin: 1.5% 3% 1.5% 1.5%; /* top, right, bottom, left */
+    border: solid;
 }
 
 #link-wrapper {
@@ -27,7 +27,7 @@
 
 #linkedin {
     text-align: center;
-    flex: 50%;
+    flex: 1;
 }
 
 #github {
@@ -35,10 +35,24 @@
     flex: 1;
 }
 
+#experience-wrapper {
+    display: flex;
+}
+
 #my-projects {
-    padding: 5%;
+    padding: 3%;
+    margin: 1.5% 1.5% 3% 3%; /* top, right, bottom, left */
+    border: solid;
+    flex: 1;
 }
 
 #my-experiences {
-    padding: 5%;
+    padding: 3%;
+    margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
+    border: solid;
+    flex: 1;
+}
+
+#fact-container {
+  margin-top: 20px;
 }

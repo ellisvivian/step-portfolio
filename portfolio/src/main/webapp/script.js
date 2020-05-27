@@ -31,7 +31,9 @@ function addFunFact() {
  * Changes the image on the page.
  */
 function changeImage() {
-  currentImage = document.getElementById('img')
+  currentImage = document.getElementById('img');
+
+  // Update the image based on the current image.
   if (currentImage.src.match('/images/1.jpeg')) {
     currentImage.src = '/images/2.jpeg';
   } else if (currentImage.src.match('/images/2.jpeg')) {
