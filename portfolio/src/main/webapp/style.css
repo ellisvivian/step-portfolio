@@ -1,9 +1,41 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+#heading {
+    font-size: 60px;
+    text-align: center;
 }
 
-#greeting-container {
+#info-wrapper {
+    display: flex;
+}
+
+#about-me {
+    flex: 80;
+    padding: 5%;
+}
+
+#fact-container {
   margin-top: 20px;
 }
+
+#personal-links {
+    flex: 1;
+    padding: 5%;
+}
+
+#link-wrapper {
+    display: flex;
+}
+
+#linkedin {
+    text-align: center;
+    flex: 50%;
+}
+
+#github {
+    text-align: center;
+    flex: 1;
+}
+
+#my-projects {
+    padding: 5%;
+}
+
