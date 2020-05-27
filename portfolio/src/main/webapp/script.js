@@ -26,3 +26,19 @@ function addFunFact() {
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fun_fact;
 }
+
+/**
+ * Changes the image on the page.
+ */
+function changeImage() {
+  currentImage = document.getElementById('img')
+  if (currentImage.src.match('/images/1.jpeg')) {
+    currentImage.src = '/images/2.jpeg';
+  } else if (currentImage.src.match('/images/2.jpeg')) {
+    currentImage.src = '/images/3.jpeg';
+  } else if (currentImage.src.match('/images/3.jpeg')) {
+    currentImage.src = '/images/4.jpeg';
+  } else if (currentImage.src.match('/images/4.jpeg')) {
+    currentImage.src = '/images/1.jpeg';
+  } 
+}
