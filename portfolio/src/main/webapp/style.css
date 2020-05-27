@@ -12,13 +12,27 @@
     padding: 5%;
 }
 
+#fact-container {
+  margin-top: 20px;
+}
+
 #personal-links {
     flex: 1;
     padding: 5%;
 }
 
-#fact-container {
-  margin-top: 20px;
+#link-wrapper {
+    display: flex;
+}
+
+#linkedin {
+    text-align: center;
+    flex: 50%;
+}
+
+#github {
+    text-align: center;
+    flex: 1;
 }
 
 #my-projects {
