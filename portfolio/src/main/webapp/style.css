@@ -1,8 +1,8 @@
 :root {
-    --background-color: #e7f3ee;
-    --box-color: #b2e4d5;
-    --shadow-color: #00909e;
-    --text-color: #142850;
+    --background-color:#f3f8ff; 
+    --box-color: #deecff;
+    --accent-color: #9E788F;
+    --text-color: #424874;
 }
 
 #body {
@@ -83,4 +83,18 @@
     margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
     background-color: var(--box-color);
     flex: 2;
+}
+
+#button {
+    background-color: var(--box-color);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    font-size: 16px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+#button:hover {
+    background-color: var(--accent-color);
+    color: var(--box-color);
 }
