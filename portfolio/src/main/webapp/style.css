@@ -27,12 +27,20 @@
     background-color: var(--box-color);
 }
 
+#about-me:hover {
+    box-shadow: 5px 5px var(--accent-color);
+}
+
 #personal-links {
     flex: 1;
     padding: 3%;
     margin: 1.5% 3% 1.5% 1.5%; /* top, right, bottom, left */
     background-color: var(--box-color);
     text-align: center;
+}
+
+#personal-links:hover {
+    box-shadow: 5px 5px var(--accent-color);
 }
 
 #link-wrapper {
@@ -70,6 +78,10 @@
     flex: 1;
 }
 
+#my-projects:hover {
+    box-shadow: 5px 5px var(--accent-color);
+}
+
 #riceapps-wrapper {
     display: flex;
 }
@@ -85,13 +97,17 @@
     flex: 2;
 }
 
+#my-experiences:hover {
+    box-shadow: 5px 5px var(--accent-color);
+}
+
 #button {
     background-color: var(--box-color);
     color: var(--accent-color);
     border: 1px solid var(--accent-color);
     font-size: 16px;
     padding: 5px 10px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 #button:hover {
