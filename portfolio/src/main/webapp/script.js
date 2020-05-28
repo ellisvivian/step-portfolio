@@ -17,7 +17,8 @@
  */
 function addFunFact() {
   const fun_facts =
-      ['My favorite color is purple.', 'I have a little brother.', 'I am half Chinese.', 'I am 18 years old.'];
+      ['My favorite color is purple.', 'I have a little brother.', 'I am half-Chinese.', 'I am 18 years old.', 'My elbows are double-jointed.',
+      'I love Shrek (unironically).'];
 
   // Pick a random fun fact.
   const fun_fact = fun_facts[Math.floor(Math.random() * fun_facts.length)];
@@ -34,13 +35,13 @@ function changeImage() {
   currentImage = document.getElementById('img');
 
   // Update the image based on the current image.
-  if (currentImage.src.match('/images/1.jpeg')) {
-    currentImage.src = '/images/2.jpeg';
-  } else if (currentImage.src.match('/images/2.jpeg')) {
-    currentImage.src = '/images/3.jpeg';
-  } else if (currentImage.src.match('/images/3.jpeg')) {
-    currentImage.src = '/images/4.jpeg';
-  } else if (currentImage.src.match('/images/4.jpeg')) {
-    currentImage.src = '/images/1.jpeg';
+  if (currentImage.src.match('/images/1.jpg')) {
+    currentImage.src = '/images/2.jpg';
+  } else if (currentImage.src.match('/images/2.jpg')) {
+    currentImage.src = '/images/3.jpg';
+  } else if (currentImage.src.match('/images/3.jpg')) {
+    currentImage.src = '/images/4.jpg';
+  } else if (currentImage.src.match('/images/4.jpg')) {
+    currentImage.src = '/images/1.jpg';
   } 
 }

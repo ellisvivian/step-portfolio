@@ -22,36 +22,40 @@
           campus, the Wiess College commons, just studying and laughing with friends. 
         </p>
         <p>Back at my home in Cupertino, California, I spend much of my time with family and friends, exploring new places and trying new boba shops. 
-          When I'm not coding I'm happy to pass the time with a good book, a bike ride around the neighborhood, or my favorite movie, Shrek 2. 
+          When I'm not coding I'm happy to pass the time with a good book or a bike ride around the neighborhood.
         </p>
       </div>
       <div id="personal-links">
         <img src="/images/vivianpic.jpeg" alt="Image of Vivian" width="250" height="250">
         <div id="link-wrapper">
-          <div id="linkedin">
-            <a href="https://www.linkedin.com/in/vivian-ellis-49832a195/" target="_blank">LinkedIn</a>
+          <div id="fun-fact-button">
+            <button onClick="addFunFact()">Click for a fun fact.</button>
           </div>
-          <div id="github">
-            <a href="https://www.github.com/ellisvivian/" target="_blank">GitHub</a>
+          <div id="links">
+            <a id="link" href="https://www.linkedin.com/in/vivian-ellis-49832a195/" target="_blank">
+              <img src="/images/linkedinicon.webp" width="30" height="30">
+            </a>
+            <a id="link" href="https://www.github.com/ellisvivian/" target="_blank">
+              <img src="/images/githubicon.svg" width="28" heigth="28">
+            </a>
           </div>
         </div>
+        <div id="fact-container"></div>
       </div>
     </div>
     <div id='experience-wrapper'>
+      <div id="my-experiences">
+        <h1>Important Aspects of My Life</h1>
+        <button onclick="changeImage()">Click here to see something else.</button>
+        <br></br>
+        <img id="img" src="/images/1.jpg" width="504" height="378">
+      </div>
       <div id="my-projects">
         <h1>My Projects</h1>
         <ul>
           <li>blah blah blah</li>
           <li>more blah blah blah</li>
         </ul>
-      </div>
-      <div id="my-experiences">
-        <p>Click here to change the image:</p>
-        <button onclick="changeImage()">Click me!</button>
-        <img id="img" src="/images/1.jpeg">
-        <p>Click here to learn more about me:</p>
-        <button onclick="addFunFact()">Click me!</button>
-        <div id="fact-container"></div>
       </div>
     </div>
   </body>

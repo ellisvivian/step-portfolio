@@ -19,34 +19,40 @@
     padding: 3%;
     margin: 1.5% 3% 1.5% 1.5%; /* top, right, bottom, left */
     border: solid;
+    text-align: center;
 }
 
 #link-wrapper {
-    display: flex;
+    width: 250px;
+    display: inline-flex;
 }
 
-#linkedin {
-    text-align: center;
-    flex: 1;
+#fun-fact-button {
+    flex: 3;
+    text-align: left;
 }
 
-#github {
-    text-align: center;
+#links {
     flex: 1;
+    text-align: right;
+}
+
+#link {
+    text-decoration: none;
 }
 
 #experience-wrapper {
     display: flex;
 }
 
-#my-projects {
+#my-experiences {
     padding: 3%;
     margin: 1.5% 1.5% 3% 3%; /* top, right, bottom, left */
     border: solid;
     flex: 1;
 }
 
-#my-experiences {
+#my-projects {
     padding: 3%;
     margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
     border: solid;
