@@ -114,6 +114,20 @@
     transform: translate(-5px, -5px);
 }
 
+#experience-wrapper {
+    display: flex;
+    padding: 0px 0px 10px 0px;
+}
+
+#experience-image {
+    flex: 2;
+}
+
+#description {
+    flex: 1;
+    padding: 0% 0% 0% 1.5%;
+}
+
 #button {
     background-color: var(--accent-color);
     color: var(--box-color);

@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   </head>
-  <body id="body">
+  <body id="body" onload="initialDisplay()">
     <div id="heading">
       <h1>Vivian Ellis</h1>
     </div>
@@ -62,9 +62,13 @@
       </div>
       <div id="my-experiences">
         <h1>Important Aspects of My Life</h1>
-        <img id="img" src="/images/1.jpg" width="504" height="378">
-        <br></br>
-        <button id="button" onclick="changeImage()">Learn about something else.</button>
+        <div id="experience-wrapper">
+          <div id="experience-image">
+            <img id="img" width="504" height="378">
+          </div>
+          <div id="description"></div>
+        </div>
+        <button id="button" onclick="changeDisplay()">Learn about something else.</button>
       </div>
     </div>
   </body>

@@ -28,6 +28,8 @@ function addFunFact() {
   factContainer.innerText = fun_fact;
 }
 
+
+
 /**
  * Changes the image on the page.
  */
@@ -35,13 +37,48 @@ function changeImage() {
   currentImage = document.getElementById('img');
 
   // Update the image based on the current image.
-  if (currentImage.src.match('/images/1.jpg')) {
-    currentImage.src = '/images/2.jpg';
-  } else if (currentImage.src.match('/images/2.jpg')) {
-    currentImage.src = '/images/3.jpg';
-  } else if (currentImage.src.match('/images/3.jpg')) {
-    currentImage.src = '/images/4.jpg';
-  } else if (currentImage.src.match('/images/4.jpg')) {
-    currentImage.src = '/images/1.jpg';
-  } 
+  for (let i = 0; i < image_sources.length; i ++) {
+      if (currentImage.src.match(image_sources[i])) {
+        if (i < image_sources.length - 1) {
+            currentImage.src = image_sources[i + 1];
+        } else {
+            currentImage.src = image_sources[0];
+        }
+        break;
+      }
+  }
+}
+
+let count;
+
+let image_sources = ['/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg']
+
+let descriptions = ['At Rice, students are randomly split into 11 residential colleges, which will serve as an' +
+                    'inclusive community throughout their four years on campus (and beyond). My college is ' +
+                    'Wiess college, and from the moment I was welcomed during orientation week it has felt ' + 
+                    'like home. From the friendly faces I see in commons every day to our quirky and exciting ' +
+                    'traditions, I am truly grateful for my Team Family Wiess!', 
+                    'cousins and family wooo',
+                    'gotta love epic travel adventures',
+                    'dance dance revolution'];
+
+/*
+ * Displays the intital image and description once the page is loaded.
+ */
+function initialDisplay() {
+    count = -1;
+    changeDisplay()
+}
+
+/*
+ * Changes the image and description on the page.
+ */ 
+function changeDisplay() {
+    if (count == 3) {
+        count = 0;
+    } else {
+        count ++;
+    }
+    document.getElementById('img').src = image_sources[count];
+    document.getElementById('description').innerText = descriptions[count];
 }
