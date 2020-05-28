@@ -1,8 +1,13 @@
 :root {
-    --background-color:#f3f8ff; 
+    /* --background-color:#f3f8ff; 
     --box-color: #deecff;
     --accent-color: #9E788F;
-    --text-color: #424874;
+    --text-color: #424874; */
+    --background-color: #eae9e4;
+    --box-color: #d3e0ce;
+    --accent-color: #e19999;
+    --text-color: #5b6564;
+    --shadow-color: #9cb8a0;
 }
 
 #body {
@@ -28,7 +33,7 @@
 }
 
 #about-me:hover {
-    box-shadow: 5px 5px var(--accent-color);
+    box-shadow: 5px 5px var(--shadow-color);
 }
 
 #personal-links {
@@ -40,7 +45,7 @@
 }
 
 #personal-links:hover {
-    box-shadow: 5px 5px var(--accent-color);
+    box-shadow: 5px 5px var(--shadow-color);
 }
 
 #link-wrapper {
@@ -79,7 +84,7 @@
 }
 
 #my-projects:hover {
-    box-shadow: 5px 5px var(--accent-color);
+    box-shadow: 5px 5px var(--shadow-color);
 }
 
 #riceapps-wrapper {
@@ -98,7 +103,7 @@
 }
 
 #my-experiences:hover {
-    box-shadow: 5px 5px var(--accent-color);
+    box-shadow: 5px 5px var(--shadow-color);
 }
 
 #button {
