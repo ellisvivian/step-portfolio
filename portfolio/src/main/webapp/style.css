@@ -1,3 +1,16 @@
+:root {
+    --background-color: #e7f3ee;
+    --box-color: #b2e4d5;
+    --shadow-color: #00909e;
+    --text-color: #142850;
+}
+
+#body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Open Sans', sans-serif;
+}
+
 #heading {
     font-size: 50px;
     text-align: center;
@@ -11,14 +24,14 @@
     flex: 4;
     padding: 3%;
     margin: 1.5% 1.5% 1.5% 3%; /* top, right, bottom, left */
-    border: solid;
+    background-color: var(--box-color);
 }
 
 #personal-links {
     flex: 1;
     padding: 3%;
     margin: 1.5% 3% 1.5% 1.5%; /* top, right, bottom, left */
-    border: solid;
+    background-color: var(--box-color);
     text-align: center;
 }
 
@@ -53,7 +66,7 @@
 #my-projects {
     padding: 3%;
     margin: 1.5% 1.5% 3% 3%; /* top, right, bottom, left */
-    border: solid;
+    background-color: var(--box-color);
     flex: 1;
 }
 
@@ -68,6 +81,6 @@
 #my-experiences {
     padding: 3%;
     margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
-    border: solid;
-    flex: 3;
+    background-color: var(--box-color);
+    flex: 2;
 }
