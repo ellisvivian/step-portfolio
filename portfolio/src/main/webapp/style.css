@@ -3,7 +3,7 @@
     text-align: center;
 }
 
-#info-wrapper {
+#top-wrapper {
     display: flex;
 }
 
@@ -25,6 +25,7 @@
 #link-wrapper {
     width: 250px;
     display: inline-flex;
+    margin-top: 5px;
 }
 
 #fun-fact-button {
@@ -41,24 +42,32 @@
     text-decoration: none;
 }
 
-#experience-wrapper {
+#fact-container {
+  margin-top: 20px;
+}
+
+#bottom-wrapper {
     display: flex;
 }
 
-#my-experiences {
+#my-projects {
     padding: 3%;
     margin: 1.5% 1.5% 3% 3%; /* top, right, bottom, left */
     border: solid;
     flex: 1;
 }
 
-#my-projects {
+#riceapps-wrapper {
+    display: flex;
+}
+
+#team-image {
+    text-align: center;
+}
+
+#my-experiences {
     padding: 3%;
     margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
     border: solid;
-    flex: 1;
-}
-
-#fact-container {
-  margin-top: 20px;
+    flex: 3;
 }
