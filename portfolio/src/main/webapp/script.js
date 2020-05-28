@@ -28,38 +28,23 @@ function addFunFact() {
   factContainer.innerText = fun_fact;
 }
 
-
-
-/**
- * Changes the image on the page.
- */
-function changeImage() {
-  currentImage = document.getElementById('img');
-
-  // Update the image based on the current image.
-  for (let i = 0; i < image_sources.length; i ++) {
-      if (currentImage.src.match(image_sources[i])) {
-        if (i < image_sources.length - 1) {
-            currentImage.src = image_sources[i + 1];
-        } else {
-            currentImage.src = image_sources[0];
-        }
-        break;
-      }
-  }
-}
-
 let count;
 
 let image_sources = ['/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg']
 
-let descriptions = ['At Rice, students are randomly split into 11 residential colleges, which will serve as an' +
+let descriptions = ['Family has always been something really important to me, especially my cousins. ' + 
+                    'Every year, we try to get together in what we call \'Cuz Unite\'. During Cuz Unites, ' +
+                    'we go on wild adventures, play games, and just spend time catching up and enjoying ' +
+                    'each other\'s company. Around my cousins I always feel loved and free to be myself.',
+    
+                    'At Rice, students are randomly split into 11 residential colleges, which will serve as an ' +
                     'inclusive community throughout their four years on campus (and beyond). My college is ' +
                     'Wiess college, and from the moment I was welcomed during orientation week it has felt ' + 
                     'like home. From the friendly faces I see in commons every day to our quirky and exciting ' +
                     'traditions, I am truly grateful for my Team Family Wiess!', 
-                    'cousins and family wooo',
+
                     'gotta love epic travel adventures',
+                    
                     'dance dance revolution'];
 
 /*
@@ -74,6 +59,7 @@ function initialDisplay() {
  * Changes the image and description on the page.
  */ 
 function changeDisplay() {
+    console.log("yep this is happening");
     if (count == 3) {
         count = 0;
     } else {
@@ -81,4 +67,10 @@ function changeDisplay() {
     }
     document.getElementById('img').src = image_sources[count];
     document.getElementById('description').innerText = descriptions[count];
+}
+
+let timer = setInterval('changeDisplay();', 4000);
+
+function stop() {
+    clearInterval(timer);
 }
