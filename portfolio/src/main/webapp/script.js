@@ -18,7 +18,7 @@
 function addFunFact() {
   const fun_facts =
       ['My favorite color is purple.', 'I have a little brother.', 'I am half-Chinese.', 'I am 18 years old.', 'My elbows are double-jointed.',
-      'I love Shrek (unironically).'];
+      'I love Shrek (unironically).', 'I don\'t like eating many fruits.', 'I\'m allergic to cats.'];
 
   // Pick a random fun fact.
   const fun_fact = fun_facts[Math.floor(Math.random() * fun_facts.length)];
