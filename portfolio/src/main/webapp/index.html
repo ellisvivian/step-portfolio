@@ -5,40 +5,104 @@
     <title>Vivian Ellis</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body id="body" onload="initialDisplay()">
     <div id="heading">
       <h1>Vivian Ellis</h1>
     </div>
-    <div id="info-wrapper">
-        <div id="about-me">
-            <h1>About Me</h1>
-            <p>Hi, I'm Vivian, a rising sophomore at Rice University studying Computer Science.
-                I'm originally from Cupertino, CA, but now my residential college is my home.
-            </p>
-            <img src="/images/tfw.jpeg" alt="Image of Wiess College">
-            <p>Click here to learn more about me:</p>
-            <button onclick="addFunFact()">Click me!</button>
-            <div id="fact-container"></div>
+    <div id="top-wrapper">
+      <div id="about-me">
+        <h1>About Me</h1>
+        <p>Hi, I'm Vivian, a rising sophomore at Rice University studying Computer Science. 
+        </p>
+        <p>At Rice, I am part of RiceApps, an organization where we code projects to improve the lives of Rice students and the greater Houston community.
+          I am also a member of Torque, the women's ultimate frisbee team, which I decided to join in an effort to try something new after spending most of
+          my life as a dancer. Because I have so much love for the warm and welcoming community Rice is, I am also a lunch host for prospective students, 
+          and I will be welcoming new students as an advisor during our orientation week this August. I can most commonly be found at my favorite place on 
+          campus, the Wiess College commons, just studying and laughing with friends. 
+        </p>
+        <p>Back at my home in Cupertino, California, I spend much of my time with family and friends, exploring new places and trying new boba shops. 
+          When I'm not coding I'm happy to pass the time with a good book or a bike ride around the neighborhood.
+        </p>
+      </div>
+      <div id="personal-links">
+        <img src="/images/vivianpic.jpeg" alt="Image of Vivian" width="250" height="250">
+        <div id="link-wrapper">
+          <div id="fun-fact-button">
+            <button class="button" onClick="addFunFact()">Click for a fun fact.</button>
+          </div>
+          <div id="links">
+            <a id="link" href="https://www.linkedin.com/in/vivian-ellis-49832a195/" target="_blank">
+              <img src="/images/linkedinicon.webp" alt="LinkedIn" width="30" height="30">
+            </a>
+            <a id="link" href="https://www.github.com/ellisvivian/" target="_blank">
+              <img src="/images/githubicon.svg" alt="GitHub" width="28" heigth="28">
+            </a>
+          </div>
         </div>
-        <div id="personal-links">
-            <img src="/images/vivianpic.jpeg" alt="Image of Vivian" width="250" height="250">
-            <div id="link-wrapper">
-                <div id="linkedin">
-                    <a href="https://www.linkedin.com/in/vivian-ellis-49832a195/" target="_blank">LinkedIn</a>
-                </div>
-                <div id="github">
-                    <a href="https://www.github.com/ellisvivian/" target="_blank">GitHub</a>
-                </div>
-            </div>
-        </div>
+        <div id="fact-container"></div>
+      </div>
     </div>
-    <div id='my-projects'>
+    <div id='bottom-wrapper'>
+      <div id="my-projects">
         <h1>My Projects</h1>
-        <ul>
-            <li>blah blah blah</li>
-            <li>more blah blah blah</li>
-        </ul>
+        <h3>RiceApps: Friends of Texas Wildlife</h3>
+        <p>On a team composed of four software engineers, two team leads, and one designer, 
+          we collaborated to create a new website for Friends of Texas Wildlife using React.
+        </p>
+        <a href="https://ftwl2019.herokuapp.com/" target="_blank">
+          <button class="button">Visit the site here.</button>
+        </a>
+        <br></br>
+        <div id='team-image'>
+          <img src="/images/riceapps.jpg" alt="Image of RiceApps Team" width="341.333" height="256">
+        </div>
+      </div>
+      <div id="my-experiences">
+        <h1>Important Aspects of My Life</h1>
+        <div class="experience">
+          <img id="img" src="/images/1.jpg" alt="Image of Cousins" width="504" height="378">
+          <p id="description">Family has always been something really important to me, especially my cousins. 
+            Every year, we try to get together in what we call "Cuz Unite". During Cuz Unites, 
+            we go on wild adventures, play games, and just spend time catching up and enjoying 
+            each other's company. Around my cousins I always feel loved and free to be myself.
+          </p>
+        </div>
+        <div class="experience">
+          <img id="img" src="/images/2.jpg" alt="Image of Wiess" width="504" height="378">
+          <p id="description">At Rice, students are randomly split into 11 residential colleges, which will serve as an
+            inclusive community throughout their four years on campus (and beyond). My college is 
+            Wiess College, and from the moment I was welcomed during orientation week it has felt 
+            like home. From the friendly faces I see in commons every day to our quirky and exciting 
+            traditions, I am truly grateful for my Team Family Wiess!
+          </p>
+        </div>
+        <div class="experience">
+          <img id="img" src="/images/3.jpg" alt="Image of Europe Trip" width="504" height="378">
+          <p id="description">The summer after my senior year of high school, I went on an epic month-long European vacation 
+            with my family, where we visited The Netherlands, Belgium, France, Scotland, and England. It was 
+            such an amazing experience to get to see and explore so many different places, and I am so  
+            appreciative of my family for making it happen. Hopefully I can continue to travel the world 
+            on my own someday.
+          </p>
+        </div>
+        <div class="experience">
+          <img id="img" src="/images/4.jpg" alt="Image of Cheer Competition" width="504" height="378">
+          <p id="description">Ever since I was really little and just twirling around the house with scarves, 
+            I've always had a passion for dance. Whether it was performing on stage with my 
+            competitive team, at a rally with my high school class, or in the quad with my kpop 
+            dance club, I had so much fun expressing myself through movement. Sometimes the 
+            competitive nature of the dance world got to me, but I would turn back to low-pressure 
+            dance environments with friends to remind me of the happiness it brought me.
+          </p>
+        </div>
+        <div id="slideshow-buttons">
+          <button class="button" onclick="stop()">Stay on this item.</button>
+          <button class="button" id="continue" onclick="start()">Continue the slideshow.</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>

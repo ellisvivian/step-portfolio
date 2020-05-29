@@ -12,17 +12,81 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+let fact_num_old = -1;
+
 /**
  * Adds a fun fact about me to the page.
  */
-function addFunFact() {
-  const fun_facts =
-      ['My favorite color is purple.', 'I have a little brother.', 'I am half Chinese.', 'I am 18 years old.'];
+function addFunFact() { 
+  const fun_facts = [
+    'My favorite color is purple.', 
+    'I have a little brother.', 
+    'I am half-Chinese.', 
+    'I am 18 years old.', 
+    'My elbows are double-jointed.',
+    'I love Shrek (unironically).', 
+    'I don\'t like eating many fruits.', 
+    'I\'m allergic to cats.'
+  ];
 
-  // Pick a random fun fact.
-  const fun_fact = fun_facts[Math.floor(Math.random() * fun_facts.length)];
+  // Pick a random fun fact different from the current one.
+  let fact_num_new = Math.floor(Math.random() * fun_facts.length);
+  if (fact_num_old != -1) {
+    while (fact_num_old == fact_num_new) {
+      fact_num_new = Math.floor(Math.random() * fun_facts.length);
+    }
+  }
+  fact_num_old = fact_num_new;
 
   // Add it to the page.
   const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = fun_fact;
+  factContainer.innerText = fun_facts[fact_num_new];
+}
+
+let count;
+let timer;
+
+/*
+ * Displays the initial image and description once the page is loaded.
+ */
+function initialDisplay() {
+  count = -1;
+  start();
+}
+
+/*
+ * Changes the image and description displayed on the page.
+ */
+function autoSlideshow() {
+  let experiences = document.getElementsByClassName('experience');
+
+  // Hide all images and descriptions.
+  for (i = 0; i < experiences.length; i ++) {
+    experiences[i].style.display = "none";
+  }
+    
+  // Update count and display next image and description. 
+  if (count == 3) {
+    count = 0;
+  } else {
+    count ++;
+  }
+  experiences[count].style.display = "flex";
+}
+
+/*
+ * Begins the slideshow.
+ */
+function start() {
+  autoSlideshow();
+  timer = setInterval('autoSlideshow();', 6000)
+  document.getElementById('continue').style.display = "none";
+}
+
+/*
+ * Stops the slideshow.
+ */
+function stop() {
+  clearInterval(timer); // Stops the automatic changing of the image and description.
+  document.getElementById('continue').style.display = "block";
 }

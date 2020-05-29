@@ -1,41 +1,157 @@
-#heading {
-    font-size: 60px;
-    text-align: center;
+:root {
+  --background-color: #eae9e4;
+  --box-color: #d3e0ce;
+  --accent-color: #e7acaa;
+  --text-color: #5b6564;
+  --shadow-color: #9cb8a0;
 }
 
-#info-wrapper {
-    display: flex;
+#body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Open Sans', sans-serif;
+}
+
+#heading {
+  font-size: 50px;
+  text-align: center;
+}
+
+#top-wrapper {
+  display: flex;
 }
 
 #about-me {
-    flex: 80;
-    padding: 5%;
+  flex: 4;
+  padding: 3%;
+  margin: 1.5% 1.5% 1.5% 3%; /* top, right, bottom, left */
+  background-color: var(--box-color);
+  transition: ease transform 0.5s, ease box-shadow 0.5s;
+}
+
+#about-me:hover {
+  box-shadow: 10px 10px var(--shadow-color);
+  transform: translate(-5px, -5px);
+}
+
+#personal-links {
+  flex: 1;
+  padding: 3%;
+  margin: 1.5% 3% 1.5% 1.5%; /* top, right, bottom, left */
+  background-color: var(--box-color);
+  text-align: center;
+  transition: ease transform 0.5s, ease box-shadow 0.5s;
+}
+
+#personal-links:hover {
+  box-shadow: 10px 10px var(--shadow-color);
+  transform: translate(-5px, -5px);
+}
+
+#link-wrapper {
+  width: 250px;
+  display: inline-flex;
+  margin-top: 5px;
+}
+
+#fun-fact-button {
+  flex: 3;
+  text-align: left;
+}
+
+#links {
+  flex: 1;
+  text-align: right;
+}
+
+#link {
+  text-decoration: none;
 }
 
 #fact-container {
   margin-top: 20px;
 }
 
-#personal-links {
-    flex: 1;
-    padding: 5%;
-}
-
-#link-wrapper {
-    display: flex;
-}
-
-#linkedin {
-    text-align: center;
-    flex: 50%;
-}
-
-#github {
-    text-align: center;
-    flex: 1;
+#bottom-wrapper {
+  display: flex;
 }
 
 #my-projects {
-    padding: 5%;
+  padding: 3%;
+  margin: 1.5% 1.5% 3% 3%; /* top, right, bottom, left */
+  background-color: var(--box-color);
+  flex: 1;
+  transition: ease transform 0.5s, ease box-shadow 0.5s;
 }
 
+#my-projects:hover {
+  box-shadow: 10px 10px var(--shadow-color);
+  transform: translate(-5px, -5px);
+}
+
+#riceapps-wrapper {
+  display: flex;
+}
+
+#team-image {
+  text-align: center;
+}
+
+#my-experiences {
+  padding: 3%;
+  margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
+  background-color: var(--box-color);
+  flex: 2;
+  transition: ease transform 0.5s, ease box-shadow 0.5s;
+}
+
+#my-experiences:hover {
+  box-shadow: 10px 10px var(--shadow-color);
+  transform: translate(-5px, -5px);
+}
+
+.experience {
+  display: none;
+  animation-name: fade;
+  animation-duration: 3s;
+  padding-bottom: 10px;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+#img {
+  padding-right: 1.5%;
+}
+
+#description {
+  padding-left: 1.5%;
+  margin: 0 0 0 0;
+}
+
+#slideshow-buttons {
+  display: flex;
+}
+
+#continue {
+  display: none;
+  margin-left: 10px;
+}
+
+.button {
+  background-color: var(--accent-color);
+  color: var(--box-color);
+  border: 1.5px solid var(--accent-color);
+  font-size: 16px;
+  padding: 5px 10px;
+  font-weight: 550;
+  border-radius: 4px;
+  transition: ease background-color 0.1s, ease color 0.1s;
+}
+
+.button:hover {
+  background-color: var(--box-color);
+  color: var(--accent-color);
+}
