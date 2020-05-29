@@ -31,7 +31,7 @@
         <img src="/images/vivianpic.jpeg" alt="Image of Vivian" width="250" height="250">
         <div id="link-wrapper">
           <div id="fun-fact-button">
-            <button id="button" onClick="addFunFact()">Click for a fun fact.</button>
+            <button class="button" onClick="addFunFact()">Click for a fun fact.</button>
           </div>
           <div id="links">
             <a id="link" href="https://www.linkedin.com/in/vivian-ellis-49832a195/" target="_blank">
@@ -53,7 +53,7 @@
         we collaborated to created a new website for Friends of Texas Wildlife using React.
         </p>
         <a href="https://ftwl2019.herokuapp.com/" target="_blank">
-          <button id="button">Visit the site here.</button>
+          <button class="button">Visit the site here.</button>
         </a>
         <br></br>
         <div id='team-image'>
@@ -62,43 +62,46 @@
       </div>
       <div id="my-experiences">
         <h1>Important Aspects of My Life</h1>
-            <div class="experience">
-              <img id="img" src="/images/1.jpg" width="504" height="378">
-              <p id="description">Family has always been something really important to me, especially my cousins. 
-                Every year, we try to get together in what we call "Cuz Unite". During Cuz Unites, 
-                we go on wild adventures, play games, and just spend time catching up and enjoying 
-                each other's company. Around my cousins I always feel loved and free to be myself.
-              </p>
-            </div>
-            <div class="experience">
-              <img id="img" src="/images/2.jpg" width="504" height="378">
-              <p id="description">At Rice, students are randomly split into 11 residential colleges, which will serve as an
-                inclusive community throughout their four years on campus (and beyond). My college is 
-                Wiess college, and from the moment I was welcomed during orientation week it has felt 
-                like home. From the friendly faces I see in commons every day to our quirky and exciting 
-                traditions, I am truly grateful for my Team Family Wiess!
-              </p>
-            </div>
-            <div class="experience">
-              <img id="img" src="/images/3.jpg" width="504" height="378">
-              <p id="description">The summer after my senior year of high school, I went on an epic month-long European vacation 
-                with my family, where we visited The Netherlands, Belgium, France, Scotland, and England. It was 
-                such an amazing experience to get to see and explore so many different places, and I am so  
-                appreciative of my family for making it happen. Hopefully I can continue to travel the world 
-                on my own someday.
-              </p>
-            </div>
-            <div class="experience">
-              <img id="img" src="/images/4.jpg" width="504" height="378">
-              <p id="description">Ever since I was really little and just twirling around the house with scarves, 
-                I've always had a passion for dance. Whether it was performing on stage with my 
-                competitive team, at a rally with my high school class, or in the quad with my kpop 
-                dance club, I had so much fun expressing myself through movement. Sometimes the 
-                competitive nature of the dance world got to me, but I would turn back to low-pressure 
-                dance environments with friends to remind me of the happiness it brought me.
-              </p>
-            </div>
-        <button id="button" onclick="stop()">Stay on this item.</button>
+        <div class="experience">
+          <img id="img" src="/images/1.jpg" width="504" height="378">
+          <p id="description">Family has always been something really important to me, especially my cousins. 
+            Every year, we try to get together in what we call "Cuz Unite". During Cuz Unites, 
+            we go on wild adventures, play games, and just spend time catching up and enjoying 
+            each other's company. Around my cousins I always feel loved and free to be myself.
+          </p>
+        </div>
+        <div class="experience">
+          <img id="img" src="/images/2.jpg" width="504" height="378">
+          <p id="description">At Rice, students are randomly split into 11 residential colleges, which will serve as an
+            inclusive community throughout their four years on campus (and beyond). My college is 
+            Wiess college, and from the moment I was welcomed during orientation week it has felt 
+            like home. From the friendly faces I see in commons every day to our quirky and exciting 
+            traditions, I am truly grateful for my Team Family Wiess!
+          </p>
+        </div>
+        <div class="experience">
+          <img id="img" src="/images/3.jpg" width="504" height="378">
+          <p id="description">The summer after my senior year of high school, I went on an epic month-long European vacation 
+            with my family, where we visited The Netherlands, Belgium, France, Scotland, and England. It was 
+            such an amazing experience to get to see and explore so many different places, and I am so  
+            appreciative of my family for making it happen. Hopefully I can continue to travel the world 
+            on my own someday.
+          </p>
+        </div>
+        <div class="experience">
+          <img id="img" src="/images/4.jpg" width="504" height="378">
+          <p id="description">Ever since I was really little and just twirling around the house with scarves, 
+            I've always had a passion for dance. Whether it was performing on stage with my 
+            competitive team, at a rally with my high school class, or in the quad with my kpop 
+            dance club, I had so much fun expressing myself through movement. Sometimes the 
+            competitive nature of the dance world got to me, but I would turn back to low-pressure 
+            dance environments with friends to remind me of the happiness it brought me.
+          </p>
+        </div>
+        <div id="slideshow-buttons">
+          <button class="button" onclick="stop()">Stay on this item.</button>
+          <button class="button" id="continue" onclick="start()">Continue the slideshow.</button>
+        </div>
       </div>
     </div>
   </body>

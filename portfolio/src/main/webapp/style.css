@@ -118,7 +118,7 @@
     display: none;
     animation-name: fade;
     animation-duration: 3s;
-    padding: 0px 0px 10px 0px;
+    padding-bottom: 10px;
 }
 
 @keyframes fade {
@@ -127,14 +127,24 @@
 }
 
 #img {
-    padding: 0% 1% 0% 0%;
+    padding-right: 1.5%;
 }
 
 #description {
-    padding: 0% 0% 0% 1%;
+    padding-left: 1.5%;
+    margin: 0 0 0 0;
 }
 
-#button {
+#slideshow-buttons {
+    display: flex;
+}
+
+#continue {
+    display: none;
+    margin-left: 10px;
+}
+
+.button {
     background-color: var(--accent-color);
     color: var(--box-color);
     border: 1.5px solid var(--accent-color);
@@ -145,7 +155,7 @@
     transition: ease background-color 0.1s, ease color 0.1s;
 }
 
-#button:hover {
+.button:hover {
     background-color: var(--box-color);
     color: var(--accent-color);
 }

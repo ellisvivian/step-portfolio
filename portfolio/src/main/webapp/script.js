@@ -29,13 +29,14 @@ function addFunFact() {
 }
 
 let count;
+let timer;
 
 /*
  * Displays the intital image and description once the page is loaded.
  */
 function initialDisplay() {
     count = -1;
-    autoSlideshow();
+    start();
 }
 
 /*
@@ -61,12 +62,22 @@ function autoSlideshow() {
     experiences[count].style.display = "flex";
 }
 
-let timer = setInterval('autoSlideshow();', 6000); // Changes the image and description every 5 seconds.
-
-function stop() {
-    clearInterval(timer); // Stops the automatic changing of the image and description.
+/*
+ * Begins the slideshow.
+ */
+function start() {
+    autoSlideshow();
+    timer = setInterval('autoSlideshow();', 6000)
+    document.getElementById('continue').style.display = "none";
 }
 
+/*
+ * Stops the slideshow.
+ */
+function stop() {
+    clearInterval(timer); // Stops the automatic changing of the image and description.
+    document.getElementById('continue').style.display = "block";
+}
 
 // let image_sources = ['/images/1.jpg', '/images/2.jpg', '/images/3.jpg', '/images/4.jpg']
 
