@@ -90,3 +90,26 @@ function stop() {
   clearInterval(timer); // Stops the automatic changing of the image and description.
   document.getElementById('continue').style.display = "block";
 }
+
+/*
+ * Fetches a greeting from the server and passes it to handleResponse().
+ */
+function getGreeting() {
+    const responsePromise = fetch('/data');
+    responsePromise.then(handleReponse)
+}
+
+/*
+ * Handles the response by converting it to text and passing it to addGreetingToDom().
+ */
+function handleReponse(response) {
+    const textPromise = response.text();
+    textPromise.then(addGreetingToDom)
+}
+
+/*
+ * Adds the greeting to the DOM.
+ */
+function addGreetingToDom(greeting) {
+    document.getElementById('greeting-container').innerText = greeting; 
+}
