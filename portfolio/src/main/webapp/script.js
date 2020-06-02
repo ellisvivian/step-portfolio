@@ -95,21 +95,43 @@ function stop() {
  * Fetches a greeting from the server and passes it to handleResponse().
  */
 function getGreeting() {
-    const responsePromise = fetch('/data');
-    responsePromise.then(handleReponse)
+  const responsePromise = fetch('/data');
+  responsePromise.then(handleReponse)
 }
 
 /*
  * Handles the response by converting it to text and passing it to addGreetingToDom().
  */
 function handleReponse(response) {
-    const textPromise = response.text();
-    textPromise.then(addGreetingToDom)
+  const textPromise = response.text();
+  textPromise.then(addGreetingToDom)
 }
 
 /*
  * Adds the greeting to the DOM.
  */
 function addGreetingToDom(greeting) {
-    document.getElementById('greeting-container').innerText = greeting; 
+  document.getElementById('greeting-container').innerText = greeting; 
+}
+
+/*
+ * Fetches messages from the servers and adds them to the DOM.
+ */
+function getMessages() {
+  fetch('/data').then(response => response.json()).then((messages) => {
+    messagesContainer = document.getElementById('messages-container');
+    messagesContainer.innerHTML = '';
+    for (key in messages) {
+      messagesContainer.appendChild(createListElement(messages[key]));
+    }
+  });
+}
+
+/*
+ * Creates a <li> element containing text.
+ */
+function createListElement(text) {
+  const listElement = document.createElement('li');
+  listElement.innerText = text;
+  return listElement;
 }
