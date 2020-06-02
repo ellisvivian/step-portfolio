@@ -21,31 +21,26 @@
   display: flex;
 }
 
-#about-me {
-  flex: 4;
+.box {
   padding: 3%;
-  margin: 1.5% 1.5% 1.5% 3%; /* top, right, bottom, left */
   background-color: var(--box-color);
   transition: ease transform 0.5s, ease box-shadow 0.5s;
 }
 
-#about-me:hover {
+.box:hover {
   box-shadow: 10px 10px var(--shadow-color);
   transform: translate(-5px, -5px);
+}
+
+#about-me {
+  flex: 4;
+  margin: 1.5% 1.5% 1.5% 3%; /* top, right, bottom, left */
 }
 
 #personal-links {
   flex: 1;
-  padding: 3%;
   margin: 1.5% 3% 1.5% 1.5%; /* top, right, bottom, left */
-  background-color: var(--box-color);
   text-align: center;
-  transition: ease transform 0.5s, ease box-shadow 0.5s;
-}
-
-#personal-links:hover {
-  box-shadow: 10px 10px var(--shadow-color);
-  transform: translate(-5px, -5px);
 }
 
 #link-wrapper {
@@ -77,16 +72,8 @@
 }
 
 #my-projects {
-  padding: 3%;
   margin: 1.5% 1.5% 3% 3%; /* top, right, bottom, left */
-  background-color: var(--box-color);
   flex: 1;
-  transition: ease transform 0.5s, ease box-shadow 0.5s;
-}
-
-#my-projects:hover {
-  box-shadow: 10px 10px var(--shadow-color);
-  transform: translate(-5px, -5px);
 }
 
 #riceapps-wrapper {
@@ -98,16 +85,9 @@
 }
 
 #my-experiences {
-  padding: 3%;
   margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
-  background-color: var(--box-color);
   flex: 2;
-  transition: ease transform 0.5s, ease box-shadow 0.5s;
-}
 
-#my-experiences:hover {
-  box-shadow: 10px 10px var(--shadow-color);
-  transform: translate(-5px, -5px);
 }
 
 .experience {
@@ -154,4 +134,8 @@
 .button:hover {
   background-color: var(--box-color);
   color: var(--accent-color);
+}
+
+#fetch-testing {
+  margin: 0 3% 3% 3%;
 }
