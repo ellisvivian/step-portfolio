@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
@@ -37,14 +40,24 @@ public class DataServlet extends HttpServlet {
     String lName = getParameter(request, "last-name", "");
     String comment = getParameter(request, "comment", "");
 
-    // Add the input to the storage of inputs.
-    comments.add(fName);
-    comments.add(lName);
-    comments.add(comment);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("first-name", fName);
+    commentEntity.setProperty("last-name", lName);
+    commentEntity.setProperty("comment",comment);
 
-    // Direct the user back to the main page.
-    response.setContentType("text/html");
-    response.getWriter().println("Your comment has been submitted. Press the back button to return to the main page.");
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
+    response.sendRedirect("/index.html");
+
+    // // Add the input to the storage of inputs.
+    // comments.add(fName);
+    // comments.add(lName);
+    // comments.add(comment);
+
+    // // Direct the user back to the main page.
+    // response.setContentType("text/html");
+    // response.getWriter().println("Your comment has been submitted. Press the back button to return to the main page.");
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
