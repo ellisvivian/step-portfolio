@@ -28,15 +28,31 @@ import com.google.gson.Gson;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private final ArrayList<String> messages = new ArrayList<String>(Arrays.asList("Hello there.", "How are you?", "Hope your day is going well!"));
+  private final ArrayList<String> comments = new ArrayList<String>();
 
   @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String fName = getParameter(request, "first-name", "");
+    String lName = getParameter(request, "last-name", "");
+    String comment = getParameter(request, "comment", "");
+
+    // Add the input to the storage of inputs.
+    comments.add(fName);
+    comments.add(lName);
+    comments.add(comment);
+
+    // Direct the user back to the main page.
+    response.setContentType("text/html");
+    response.getWriter().println("Your comment has been submitted. Press the back button to return to the main page.");
+  }
+
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
+    // response.setContentType("text/html;");
     // response.getWriter().println("Hello [Your Name]!");
 
     // Convert the messages to JSON.
-    String json = convertToJsonUsingGson(messages);
+    String json = convertToJsonUsingGson(comments);
 
     // Send the JSON as the response.
     response.setContentType("application/json");
@@ -50,5 +66,17 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(list);
     return json;
+  }
+
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client
+   */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
