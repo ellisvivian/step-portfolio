@@ -44,21 +44,14 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "comment-text", "");
     long time = System.currentTimeMillis();
 
-    String max = getParameter(request, "max-comments", "");
-    if (!(max.equals(""))) {
-      maxComments = Integer.parseInt(max);
-    }
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("first-name", fName);
+    commentEntity.setProperty("last-name", lName);
+    commentEntity.setProperty("comment-text", text);
+    commentEntity.setProperty("time-stamp", time);
 
-    if (!(fName.equals("") && lName.equals("") && text.equals(""))) {
-      Entity commentEntity = new Entity("Comment");
-      commentEntity.setProperty("first-name", fName);
-      commentEntity.setProperty("last-name", lName);
-      commentEntity.setProperty("comment-text", text);
-      commentEntity.setProperty("time-stamp", time);
-
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      datastore.put(commentEntity);
-    }
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
 
     response.sendRedirect("/index.html");
   }
@@ -70,12 +63,8 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> comments = new ArrayList<>();
-    int count = 0;
-    for (Entity entity: results.asIterable()) {
-      if (count == maxComments) {
-        break;
-      }
 
+    for (Entity entity: results.asIterable()) {
       String fName = (String) entity.getProperty("first-name");
       String lName = (String) entity.getProperty("last-name");
       String text = (String) entity.getProperty("comment-text");
@@ -83,8 +72,6 @@ public class DataServlet extends HttpServlet {
 
       Comment comment = new Comment(fName, lName, text, time);
       comments.add(comment);
-
-      count ++;
     }
 
     Gson gson = new Gson();

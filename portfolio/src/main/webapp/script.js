@@ -96,8 +96,8 @@ function stop() {
  * Fetches comments from the server and adds them to the DOM.
  */
 function loadComments() {
+  const commentContainer = document.getElementById('comment-container');
   fetch('/data').then(response => response.json()).then((comments) => {
-    const commentContainer = document.getElementById('comment-container');
     comments.forEach((comment) => {
       commentContainer.appendChild(createComment(comment));
     })
@@ -120,4 +120,28 @@ function createComment(comment) {
   commentBox.appendChild(name);
   commentBox.appendChild(text);
   return commentBox;
+}
+
+/*
+ * Deletes all existing comments.
+ */
+function deleteComments() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  const promise = fetch(request);
+  promise.then(loadComments);
+}
+
+/*
+ * Displays comments based on the inputted maximum number.
+ */
+function displayMaxComments() {
+  const commentContainer = document.getElementById('comment-container');
+  commentContainer.innerHTML = "";
+  const max = document.getElementById('max-comments').value;
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const count = 0;
+    for (let i = 0; i < max; i ++) {
+      commentContainer.appendChild(createComment(comments[i]));
+    }
+  });
 }

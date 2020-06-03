@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   </head>
-  <body id="body" onload="initialDisplay();">
+  <body id="body" onload="initialDisplay()">
     <div id="heading">
       <h1>Vivian Ellis</h1>
     </div>
@@ -108,22 +108,24 @@
       <form action="/data" method="POST">
         <p>Share your thoughts in a comment!</p>
         <label for="first-name">First Name:</label><br>
-        <input type="text" id="first-name" name="first-name">
+        <input type="text" id="first-name" name="first-name" onkeydown="return event.key != 'Enter';">
         <br></br>
         <label for="last-name">Last Name:</label><br>
-        <input type="text" id="last-name" name="last-name">
+        <input type="text" id="last-name" name="last-name" onkeydown="return event.key != 'Enter';">
         <br></br>
         <label for="comment-text">Comment:</label><br>
         <textarea id="comment-text" name="comment-text"></textarea>
         <br></br>
-        <input type="submit">
+        <input type="submit" class="button" value="Submit.">
       </form>
       <br></br>
-      <form action="/data" method="POST">
+      <form>
         <label for="max-comments">Enter the maximum number of comments to be displayed:</label><br>
-        <input type="number" id="max-comments" name="max-comments" min="0">
-      </form>
+        <input type="number" id="max-comments" name="max-comments" min="0" onkeydown="return event.key != 'Enter';">
+      </form><br>
+      <button class="button" onclick="displayMaxComments()">Enter.</button>
       <br></br>
       <div id='comment-container'></div>
+      <button class="button" onclick="deleteComments()">Delete all comments.</button>
   </body>
 </html>
