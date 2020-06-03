@@ -28,7 +28,8 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.sps.data.Comment;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -38,12 +39,14 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String fName = getParameter(request, "first-name", "");
     String lName = getParameter(request, "last-name", "");
-    String comment = getParameter(request, "comment", "");
+    String text = getParameter(request, "comment-text", "");
+    long time = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("first-name", fName);
     commentEntity.setProperty("last-name", lName);
-    commentEntity.setProperty("comment",comment);
+    commentEntity.setProperty("comment-text", text);
+    commentEntity.setProperty("time-stamp", time);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -52,23 +55,20 @@ public class DataServlet extends HttpServlet {
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment");
+    Query query = new Query("Comment").addSort("time-stamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    List<List<String>> comments = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
     for (Entity entity: results.asIterable()) {
       String fName = (String) entity.getProperty("first-name");
       String lName = (String) entity.getProperty("last-name");
-      String comment = (String) entity.getProperty("comment");
+      String text = (String) entity.getProperty("comment-text");
+      long time = (long) entity.getProperty("time-stamp");
 
-      List<String> commentComponent = new ArrayList<>();
-      commentComponent.add(fName);
-      commentComponent.add(lName);
-      commentComponent.add(comment);
-
-      comments.add(commentComponent);
+      Comment comment = new Comment(fName, lName, text, time);
+      comments.add(comment);
     }
 
     Gson gson = new Gson();

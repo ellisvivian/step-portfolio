@@ -112,10 +112,10 @@ function createComment(comment) {
   commentBox.className = 'comment-box';
 
   const name = document.createElement('h3');
-  name.innerText = comment[0] + " " + comment[1];
+  name.innerText = comment.firstName + " " + comment.LastName;
 
   const text = document.createElement('p');
-  text.innerText = comment[2];  
+  text.innerText = comment.commentText;  
 
   commentBox.appendChild(name);
   commentBox.appendChild(text);
