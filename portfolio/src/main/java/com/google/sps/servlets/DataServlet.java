@@ -34,8 +34,6 @@ import com.google.appengine.api.datastore.Query;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private final ArrayList<String> comments = new ArrayList<String>();
-
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String fName = getParameter(request, "first-name", "");
@@ -59,13 +57,13 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    ArrayList<ArrayList<String>> comments = new ArrayList<>();
+    List<List<String>> comments = new ArrayList<>();
     for (Entity entity: results.asIterable()) {
       String fName = (String) entity.getProperty("first-name");
       String lName = (String) entity.getProperty("last-name");
       String comment = (String) entity.getProperty("comment");
 
-      ArrayList<String> commentComponent = new ArrayList<>();
+      List<String> commentComponent = new ArrayList<>();
       commentComponent.add(fName);
       commentComponent.add(lName);
       commentComponent.add(comment);
