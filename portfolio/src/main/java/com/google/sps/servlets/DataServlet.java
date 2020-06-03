@@ -19,14 +19,73 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
   @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String fName = getParameter(request, "first-name", "");
+    String lName = getParameter(request, "last-name", "");
+    String comment = getParameter(request, "comment", "");
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("first-name", fName);
+    commentEntity.setProperty("last-name", lName);
+    commentEntity.setProperty("comment",comment);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
+    response.sendRedirect("/index.html");
+  }
+
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello world!</h1>");
+    Query query = new Query("Comment");
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    List<List<String>> comments = new ArrayList<>();
+    for (Entity entity: results.asIterable()) {
+      String fName = (String) entity.getProperty("first-name");
+      String lName = (String) entity.getProperty("last-name");
+      String comment = (String) entity.getProperty("comment");
+
+      List<String> commentComponent = new ArrayList<>();
+      commentComponent.add(fName);
+      commentComponent.add(lName);
+      commentComponent.add(comment);
+
+      comments.add(commentComponent);
+    }
+
+    Gson gson = new Gson();
+
+    response.setContentType("application/json");
+    response.getWriter().println(gson.toJson(comments));
+  }
+
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client
+   */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }

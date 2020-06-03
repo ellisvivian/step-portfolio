@@ -8,12 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   </head>
-  <body id="body" onload="initialDisplay()">
+  <body id="body" onload="initialDisplay();">
     <div id="heading">
       <h1>Vivian Ellis</h1>
     </div>
     <div id="top-wrapper">
-      <div id="about-me">
+      <div id="about-me" class="box">
         <h1>About Me</h1>
         <p>Hi, I'm Vivian, a rising sophomore at Rice University studying Computer Science. 
         </p>
@@ -27,7 +27,7 @@
           When I'm not coding I'm happy to pass the time with a good book or a bike ride around the neighborhood.
         </p>
       </div>
-      <div id="personal-links">
+      <div id="personal-links" class="box">
         <img src="/images/vivianpic.jpeg" alt="Image of Vivian" width="250" height="250">
         <div id="link-wrapper">
           <div id="fun-fact-button">
@@ -46,7 +46,7 @@
       </div>
     </div>
     <div id='bottom-wrapper'>
-      <div id="my-projects">
+      <div id="my-projects" class="box">
         <h1>My Projects</h1>
         <h3>RiceApps: Friends of Texas Wildlife</h3>
         <p>On a team composed of four software engineers, two team leads, and one designer, 
@@ -60,7 +60,7 @@
           <img src="/images/riceapps.jpg" alt="Image of RiceApps Team" width="341.333" height="256">
         </div>
       </div>
-      <div id="my-experiences">
+      <div id="my-experiences" class="box">
         <h1>Important Aspects of My Life</h1>
         <div class="experience">
           <img id="img" src="/images/1.jpg" alt="Image of Cousins" width="504" height="378">
@@ -104,5 +104,24 @@
         </div>
       </div>
     </div>
+    <div id="fetch-testing" class="box">
+      <!-- <button class="button" onclick="getGreeting()">Fetch a greeting!</button>
+      <div id='greeting-container'></div> -->
+      <form action="/data" method="POST">
+        <p>Share your thoughts in a comment!</p>
+        <label for="first-name">First Name:</label><br>
+        <input type="text" id="first-name" name="first-name">
+        <br></br>
+        <label for="last-name">Last Name:</label><br>
+        <input type="text" id="last-name" name="last-name">
+        <br></br>
+        <label for="comment">Comment:</label><br>
+        <textarea id="comment" name="comment"></textarea>
+        <br></br>
+        <input type="submit">
+      </form>
+      <br></br>
+      <!-- <button class="button" onclick="getMessages()">Fetch messages!</button> -->
+      <div id='comment-container'></div>
   </body>
 </html>

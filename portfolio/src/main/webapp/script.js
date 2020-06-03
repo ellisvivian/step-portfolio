@@ -52,6 +52,7 @@ let timer;
 function initialDisplay() {
   count = -1;
   start();
+  loadComments();
 }
 
 /*
@@ -89,4 +90,34 @@ function start() {
 function stop() {
   clearInterval(timer); // Stops the automatic changing of the image and description.
   document.getElementById('continue').style.display = "block";
+}
+
+/*
+ * Fetches comments from the server and adds them to the DOM.
+ */
+function loadComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentContainer = document.getElementById('comment-container');
+    comments.forEach((comment) => {
+      commentContainer.appendChild(createComment(comment));
+    })
+  });
+}
+
+/*
+ * Creates an element that represents a comment.
+ */
+function createComment(comment) {
+  const commentBox = document.createElement('div');
+  commentBox.className = 'comment-box';
+
+  const name = document.createElement('h3');
+  name.innerText = comment[0] + " " + comment[1];
+
+  const text = document.createElement('p');
+  text.innerText = comment[2];  
+
+  commentBox.appendChild(name);
+  commentBox.appendChild(text);
+  return commentBox;
 }
