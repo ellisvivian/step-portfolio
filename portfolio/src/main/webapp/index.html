@@ -105,8 +105,6 @@
       </div>
     </div>
     <div id="fetch-testing" class="box">
-      <!-- <button class="button" onclick="getGreeting()">Fetch a greeting!</button>
-      <div id='greeting-container'></div> -->
       <form action="/data" method="POST">
         <p>Share your thoughts in a comment!</p>
         <label for="first-name">First Name:</label><br>
@@ -115,13 +113,17 @@
         <label for="last-name">Last Name:</label><br>
         <input type="text" id="last-name" name="last-name">
         <br></br>
-        <label for="comment">Comment:</label><br>
+        <label for="comment-text">Comment:</label><br>
         <textarea id="comment-text" name="comment-text"></textarea>
         <br></br>
         <input type="submit">
       </form>
       <br></br>
-      <!-- <button class="button" onclick="getMessages()">Fetch messages!</button> -->
+      <form action="/data" method="POST">
+        <label for="max-comments">Enter the maximum number of comments to be displayed:</label><br>
+        <input type="number" id="max-comments" name="max-comments" min="0">
+      </form>
+      <br></br>
       <div id='comment-container'></div>
   </body>
 </html>
