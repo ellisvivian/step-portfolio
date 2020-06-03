@@ -35,8 +35,6 @@ import com.google.sps.data.Comment;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  int maxComments = -1;
-
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String fName = getParameter(request, "first-name", "");
