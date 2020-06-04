@@ -28,22 +28,42 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.sps.data.Comment;
+import java.util.Date;
+import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  private static final String FIRST_NAME_PARAM = "first-name";
+  private static final String LAST_NAME_PARAM = "last-name";
+  private static final String TEXT_PARAM = "comment-text";
+  private static final String TIMESTAMP_PARAM = "time-stamp";
+  private static final String DATETIME_PARAM = "date-time";
+  private static final String ENTITY_PARAM = "Comment";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String fName = getParameter(request, "first-name", "");
-    String lName = getParameter(request, "last-name", "");
-    String comment = getParameter(request, "comment", "");
+    String fName = getParameter(request, FIRST_NAME_PARAM, "");
+    String lName = getParameter(request, LAST_NAME_PARAM, "");
+    String text = getParameter(request, TEXT_PARAM, "");
+    long time = System.currentTimeMillis();
+    
+    Date now = Calendar.getInstance().getTime();
+    DateFormat dateFormat = new SimpleDateFormat("h:mm a E, MMM d, yyyy");
+    dateFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+    String date = dateFormat.format(now);
 
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("first-name", fName);
-    commentEntity.setProperty("last-name", lName);
-    commentEntity.setProperty("comment",comment);
+    Entity commentEntity = new Entity(ENTITY_PARAM);
+    commentEntity.setProperty(FIRST_NAME_PARAM, fName);
+    commentEntity.setProperty(LAST_NAME_PARAM, lName);
+    commentEntity.setProperty(TEXT_PARAM, text);
+    commentEntity.setProperty(TIMESTAMP_PARAM, time);
+    commentEntity.setProperty(DATETIME_PARAM, date);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -52,23 +72,23 @@ public class DataServlet extends HttpServlet {
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment");
+    Query query = new Query(ENTITY_PARAM).addSort(TIMESTAMP_PARAM, SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    List<List<String>> comments = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
+
     for (Entity entity: results.asIterable()) {
-      String fName = (String) entity.getProperty("first-name");
-      String lName = (String) entity.getProperty("last-name");
-      String comment = (String) entity.getProperty("comment");
+      String fName = (String) entity.getProperty(FIRST_NAME_PARAM);
+      String lName = (String) entity.getProperty(LAST_NAME_PARAM);
+      String text = (String) entity.getProperty(TEXT_PARAM);
+      long time = (long) entity.getProperty(TIMESTAMP_PARAM);
+      String date = (String) entity.getProperty(DATETIME_PARAM);
+      long id = entity.getKey().getId();
 
-      List<String> commentComponent = new ArrayList<>();
-      commentComponent.add(fName);
-      commentComponent.add(lName);
-      commentComponent.add(comment);
-
-      comments.add(commentComponent);
+      Comment comment = new Comment(fName, lName, text, time, date, id);
+      comments.add(comment);
     }
 
     Gson gson = new Gson();

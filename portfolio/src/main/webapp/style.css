@@ -6,6 +6,33 @@
   --shadow-color: #9cb8a0;
 }
 
+.box {
+  padding: 3%;
+  background-color: var(--box-color);
+  transition: ease transform 0.5s, ease box-shadow 0.5s;
+}
+
+.box:hover {
+  box-shadow: 10px 10px var(--shadow-color);
+  transform: translate(-5px, -5px);
+}
+
+.button {
+  background-color: var(--accent-color);
+  color: var(--box-color);
+  border: 1.5px solid var(--accent-color);
+  font-size: 16px;
+  padding: 5px 10px;
+  font-weight: 550;
+  border-radius: 4px;
+  transition: ease background-color 0.1s, ease color 0.1s;
+}
+
+.button:hover {
+  background-color: var(--box-color);
+  color: var(--accent-color);
+}
+
 #body {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -19,17 +46,6 @@
 
 #top-wrapper {
   display: flex;
-}
-
-.box {
-  padding: 3%;
-  background-color: var(--box-color);
-  transition: ease transform 0.5s, ease box-shadow 0.5s;
-}
-
-.box:hover {
-  box-shadow: 10px 10px var(--shadow-color);
-  transform: translate(-5px, -5px);
 }
 
 #about-me {
@@ -87,7 +103,6 @@
 #my-experiences {
   margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
   flex: 2;
-
 }
 
 .experience {
@@ -120,22 +135,50 @@
   margin-left: 10px;
 }
 
-.button {
-  background-color: var(--accent-color);
-  color: var(--box-color);
-  border: 1.5px solid var(--accent-color);
-  font-size: 16px;
-  padding: 5px 10px;
-  font-weight: 550;
-  border-radius: 4px;
-  transition: ease background-color 0.1s, ease color 0.1s;
-}
-
-.button:hover {
-  background-color: var(--box-color);
-  color: var(--accent-color);
-}
-
-#fetch-testing {
+#comment-section {
   margin: 0 3% 3% 3%;
+  display: flex;
+}
+
+#comment-controls {
+  flex: 1;
+}
+
+#comment-count {
+  font-style: italic;
+}
+
+#comment-container {
+  flex: 3;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 3%;
+}
+
+.comment-box {
+  margin: 1% 1% 1% 1%; /* top, right, bottom, left */
+  padding: 1% 2% 1% 2%;
+  display: inline-block;
+  max-width: 30%;
+  max-height: 30%;
+  background-color: var(--background-color);
+  transition: ease transform 0.5s, ease box-shadow 0.5s;
+}
+
+.comment-box:hover {
+  box-shadow: 10px 10px var(--shadow-color);
+  transform: translate(-5px, -5px);
+}
+
+#comment-name {
+  margin-bottom: 0;
+}
+
+#comment-date {
+  margin-top: 0;
+  font-size: 12px;
+}
+
+#delete-button {
+  font-size: 12px;
 }
