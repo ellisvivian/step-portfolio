@@ -126,21 +126,39 @@ function createComment(comment) {
   const text = document.createElement('p');
   text.innerText = comment.commentText;  
 
+  const commentButtons = document.createElement('div');
+  commentButtons.id = 'comment-buttons';
+
+  if (comment.likes > 0) {
+    const likes = document.createElement('p');
+    likes.innerText = comment.likes;
+    commentButtons.appendChild(likes);
+  }
+
+  const likeButton = document.createElement('button');
+  likeButton.className = 'button icon-button';
+  const likeIcon = document.createElement('i');
+  likeIcon.className = 'fa fa-heart';
+  likeButton.appendChild(likeIcon);
+  likeButton.addEventListener('click', () => {
+    likeComment(comment);  
+  });
+  commentButtons.appendChild(likeButton);
+
   const deleteButton = document.createElement('button');
-  deleteButton.className = 'button';
-  deleteButton.id = "delete-button";
+  deleteButton.className = 'button icon-button';
   const trashIcon = document.createElement('i');
   trashIcon.className = 'fa fa-trash';
   deleteButton.appendChild(trashIcon);
-
   deleteButton.addEventListener('click', () => {
-      deleteComment(comment);
+    deleteComment(comment);
   });
+  commentButtons.appendChild(deleteButton);
 
   commentBox.appendChild(name);
   commentBox.appendChild(date);
   commentBox.appendChild(text);
-  commentBox.appendChild(deleteButton);
+  commentBox.appendChild(commentButtons);
   return commentBox;
 }
 
@@ -179,6 +197,18 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   const request = new Request('/delete-data', {method: 'POST', body: params});
+  const promise = fetch(request);
+  promise.then(loadComments);
+}
+
+/*
+ * Adds a like to the specified comment.
+ */
+function likeComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  params.append('likes', comment.likes);
+  const request = new Request('/like-data', {method: 'POST', body: params});
   const promise = fetch(request);
   promise.then(loadComments);
 }

@@ -44,6 +44,7 @@ public class DataServlet extends HttpServlet {
   private static final String TEXT_PARAM = "comment-text";
   private static final String TIMESTAMP_PARAM = "time-stamp";
   private static final String DATETIME_PARAM = "date-time";
+  private static final String LIKES_PARAM = "likes";
   private static final String ENTITY_PARAM = "Comment";
 
   @Override
@@ -64,6 +65,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(TEXT_PARAM, text);
     commentEntity.setProperty(TIMESTAMP_PARAM, time);
     commentEntity.setProperty(DATETIME_PARAM, date);
+    commentEntity.setProperty(LIKES_PARAM, 0);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -86,8 +88,9 @@ public class DataServlet extends HttpServlet {
       long time = (long) entity.getProperty(TIMESTAMP_PARAM);
       String date = (String) entity.getProperty(DATETIME_PARAM);
       long id = entity.getKey().getId();
+      long likes = (long) entity.getProperty(LIKES_PARAM);
 
-      Comment comment = new Comment(fName, lName, text, time, date, id);
+      Comment comment = new Comment(fName, lName, text, time, date, id, likes);
       comments.add(comment);
     }
 
