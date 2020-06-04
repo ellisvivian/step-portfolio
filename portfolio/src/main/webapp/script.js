@@ -126,9 +126,18 @@ function createComment(comment) {
   const text = document.createElement('p');
   text.innerText = comment.commentText;  
 
+  const deleteButton = document.createElement('button');
+  deleteButton.className = 'button';
+  deleteButton.id = "delete-button";
+  deleteButton.innerText = "Delete comment.";
+  deleteButton.addEventListener('click', () => {
+      deleteComment(comment);
+  });
+
   commentBox.appendChild(name);
   commentBox.appendChild(date);
   commentBox.appendChild(text);
+  commentBox.appendChild(deleteButton);
   return commentBox;
 }
 
@@ -156,6 +165,17 @@ function displayMaxComments() {
  */
 function deleteComments() {
   const request = new Request('/delete-data', {method: 'POST'});
+  const promise = fetch(request);
+  promise.then(loadComments);
+}
+
+/*
+ * Deletes the specified comment.
+ */
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  const request = new Request('/delete-data', {method: 'POST', body: params});
   const promise = fetch(request);
   promise.then(loadComments);
 }
