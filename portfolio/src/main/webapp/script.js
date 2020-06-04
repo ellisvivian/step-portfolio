@@ -97,11 +97,14 @@ function stop() {
  */
 function loadComments() {
   const commentContainer = document.getElementById('comment-container');
-  commentContainer.innerHTML = "";
+  commentContainer.innerHTML = '';
+  let count = 0;
   fetch('/data').then(response => response.json()).then((comments) => {
     comments.forEach((comment) => {
       commentContainer.appendChild(createComment(comment));
+      count ++;
     })
+    document.getElementById('comment-count').innerText = '(Comments displayed: ' + count + '. Total comments: ' + comments.length + '.)';
   });
 }
 
@@ -131,10 +134,15 @@ function displayMaxComments() {
   commentContainer.innerHTML = "";
   const max = document.getElementById('max-comments').value;
   fetch('/data').then(response => response.json()).then((comments) => {
-    const count = 0;
-    for (let i = 0; i < max; i ++) {
-      commentContainer.appendChild(createComment(comments[i]));
+    let count;
+    for (count = 0; count < max; count ++) {
+      if (count >= comments.length) {
+        break;
+      }
+      commentContainer.appendChild(createComment(comments[count]));
+      console.log(count);
     }
+    document.getElementById('comment-count').innerText = '(Comments displayed: ' + count + '. Total comments: ' + comments.length + '.)';
   });
 }
 

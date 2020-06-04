@@ -120,11 +120,12 @@
       </form>
       <br></br>
       <form>
-        <label for="max-comments">Enter the maximum number of comments to be displayed:</label><br>
+        <label for="max-comments">Enter the maximum number of comments you want to see:</label><br>
         <input type="number" id="max-comments" name="max-comments" min="0" onkeydown="return event.key != 'Enter';">
       </form><br>
       <button class="button" onclick="displayMaxComments()">Enter.</button>
       <br></br>
+      <div id='comment-count'></div><br>
       <div id='comment-container'></div>
       <button class="button" onclick="deleteComments()">Delete all comments.</button>
   </body>
