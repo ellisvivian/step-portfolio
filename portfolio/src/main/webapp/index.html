@@ -104,29 +104,34 @@
         </div>
       </div>
     </div>
-    <div id="fetch-testing" class="box">
-      <form action="/data" method="POST">
-        <p>Share your thoughts in a comment!</p>
-        <label for="first-name">First Name:</label><br>
-        <input type="text" id="first-name" name="first-name" onkeydown="return event.key != 'Enter';">
+    <div id="comment-section" class="box">
+      <div id="comment-controls">
+        <h4>Anything on your mind? Share your thoughts in a comment!</h4>
+        <form action="/data" method="POST">
+          <label for="first-name">First Name:</label><br>
+          <input type="text" id="first-name" name="first-name" onkeydown="return event.key != 'Enter';">
+          <br></br>
+          <label for="last-name">Last Name:</label><br>
+          <input type="text" id="last-name" name="last-name" onkeydown="return event.key != 'Enter';">
+          <br></br>
+          <label for="comment-text">Comment:</label><br>
+          <textarea id="comment-text" name="comment-text"></textarea>
+          <br></br>
+          <input type="submit" class="button" value="Submit.">
+        </form>
         <br></br>
-        <label for="last-name">Last Name:</label><br>
-        <input type="text" id="last-name" name="last-name" onkeydown="return event.key != 'Enter';">
+        <h4>Not liking the number of comments you're seeing? Change the amount that can be displayed!</h4>
+        <form>
+          <label for="max-comments">Enter the maximum number of comments you want to see:</label><br>
+          <input type="number" id="max-comments" name="max-comments" min="0" onkeydown="return event.key != 'Enter';">
+        </form>
+        <div id='comment-count'></div><br>
+        <button class="button" onclick="displayMaxComments()">Enter.</button>
         <br></br>
-        <label for="comment-text">Comment:</label><br>
-        <textarea id="comment-text" name="comment-text"></textarea>
-        <br></br>
-        <input type="submit" class="button" value="Submit.">
-      </form>
-      <br></br>
-      <form>
-        <label for="max-comments">Enter the maximum number of comments you want to see:</label><br>
-        <input type="number" id="max-comments" name="max-comments" min="0" onkeydown="return event.key != 'Enter';">
-      </form><br>
-      <button class="button" onclick="displayMaxComments()">Enter.</button>
-      <br></br>
-      <div id='comment-count'></div><br>
+        <h4>Not a fan of these comments? Permanently remove them all from the database!</h4>
+        <button class="button" onclick="deleteComments()">Delete all comments.</button>
+      </div>
       <div id='comment-container'></div>
-      <button class="button" onclick="deleteComments()">Delete all comments.</button>
+    </div>
   </body>
 </html>

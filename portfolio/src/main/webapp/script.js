@@ -104,7 +104,7 @@ function loadComments() {
       commentContainer.appendChild(createComment(comment));
       count ++;
     })
-    document.getElementById('comment-count').innerText = '(Comments displayed: ' + count + '. Total comments: ' + comments.length + '.)';
+    document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + '. Total comments: ' + comments.length + '.';
   });
 }
 
@@ -140,9 +140,8 @@ function displayMaxComments() {
         break;
       }
       commentContainer.appendChild(createComment(comments[count]));
-      console.log(count);
     }
-    document.getElementById('comment-count').innerText = '(Comments displayed: ' + count + '. Total comments: ' + comments.length + '.)';
+    document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + '. Total comments: ' + comments.length + '.';
   });
 }
 
