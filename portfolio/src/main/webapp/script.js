@@ -129,7 +129,10 @@ function createComment(comment) {
   const deleteButton = document.createElement('button');
   deleteButton.className = 'button';
   deleteButton.id = "delete-button";
-  deleteButton.innerText = "Delete comment.";
+  const trashIcon = document.createElement('i');
+  trashIcon.className = 'fa fa-trash';
+  deleteButton.appendChild(trashIcon);
+
   deleteButton.addEventListener('click', () => {
       deleteComment(comment);
   });
