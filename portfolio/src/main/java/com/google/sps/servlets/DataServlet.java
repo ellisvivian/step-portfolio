@@ -39,12 +39,18 @@ import java.util.TimeZone;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  private static final String FIRST_NAME_PARAM = "first-name";
+  private static final String LAST_NAME_PARAM = "last-name";
+  private static final String TEXT_PARAM = "comment-text";
+  private static final String TIMESTAMP_PARAM = "time-stamp";
+  private static final String DATETIME_PARAM = "date-time";
+  private static final String ENTITY_PARAM = "Comment";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String fName = getParameter(request, "first-name", "");
-    String lName = getParameter(request, "last-name", "");
-    String text = getParameter(request, "comment-text", "");
+    String fName = getParameter(request, FIRST_NAME_PARAM, "");
+    String lName = getParameter(request, LAST_NAME_PARAM, "");
+    String text = getParameter(request, TEXT_PARAM, "");
     long time = System.currentTimeMillis();
     
     Date now = Calendar.getInstance().getTime();
@@ -52,12 +58,12 @@ public class DataServlet extends HttpServlet {
     dateFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
     String date = dateFormat.format(now);
 
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("first-name", fName);
-    commentEntity.setProperty("last-name", lName);
-    commentEntity.setProperty("comment-text", text);
-    commentEntity.setProperty("time-stamp", time);
-    commentEntity.setProperty("date-time", date);
+    Entity commentEntity = new Entity(ENTITY_PARAM);
+    commentEntity.setProperty(FIRST_NAME_PARAM, fName);
+    commentEntity.setProperty(LAST_NAME_PARAM, lName);
+    commentEntity.setProperty(TEXT_PARAM, text);
+    commentEntity.setProperty(TIMESTAMP_PARAM, time);
+    commentEntity.setProperty(DATETIME_PARAM, date);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -66,7 +72,7 @@ public class DataServlet extends HttpServlet {
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("time-stamp", SortDirection.DESCENDING);
+    Query query = new Query(ENTITY_PARAM).addSort(TIMESTAMP_PARAM, SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -74,11 +80,11 @@ public class DataServlet extends HttpServlet {
     List<Comment> comments = new ArrayList<>();
 
     for (Entity entity: results.asIterable()) {
-      String fName = (String) entity.getProperty("first-name");
-      String lName = (String) entity.getProperty("last-name");
-      String text = (String) entity.getProperty("comment-text");
-      long time = (long) entity.getProperty("time-stamp");
-      String date = (String) entity.getProperty("date-time");
+      String fName = (String) entity.getProperty(FIRST_NAME_PARAM);
+      String lName = (String) entity.getProperty(LAST_NAME_PARAM);
+      String text = (String) entity.getProperty(TEXT_PARAM);
+      long time = (long) entity.getProperty(TIMESTAMP_PARAM);
+      String date = (String) entity.getProperty(DATETIME_PARAM);
 
       Comment comment = new Comment(fName, lName, text, time, date);
       comments.add(comment);
