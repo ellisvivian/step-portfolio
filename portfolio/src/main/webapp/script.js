@@ -116,12 +116,18 @@ function createComment(comment) {
   commentBox.className = 'comment-box';
 
   const name = document.createElement('h3');
+  name.id = 'comment-name';
   name.innerText = comment.firstName + " " + comment.lastName;
+
+  const date = document.createElement('p');
+  date.id = 'comment-date';
+  date.innerText = comment.dateTime;
 
   const text = document.createElement('p');
   text.innerText = comment.commentText;  
 
   commentBox.appendChild(name);
+  commentBox.appendChild(date);
   commentBox.appendChild(text);
   return commentBox;
 }

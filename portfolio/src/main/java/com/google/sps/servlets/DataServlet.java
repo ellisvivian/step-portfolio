@@ -30,6 +30,11 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.sps.data.Comment;
+import java.util.Date;
+import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -41,12 +46,18 @@ public class DataServlet extends HttpServlet {
     String lName = getParameter(request, "last-name", "");
     String text = getParameter(request, "comment-text", "");
     long time = System.currentTimeMillis();
+    
+    Date now = Calendar.getInstance().getTime();
+    DateFormat dateFormat = new SimpleDateFormat("h:mm a E, MMM d, yyyy");
+    dateFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+    String date = dateFormat.format(now);
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("first-name", fName);
     commentEntity.setProperty("last-name", lName);
     commentEntity.setProperty("comment-text", text);
     commentEntity.setProperty("time-stamp", time);
+    commentEntity.setProperty("date-time", date);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -67,8 +78,9 @@ public class DataServlet extends HttpServlet {
       String lName = (String) entity.getProperty("last-name");
       String text = (String) entity.getProperty("comment-text");
       long time = (long) entity.getProperty("time-stamp");
+      String date = (String) entity.getProperty("date-time");
 
-      Comment comment = new Comment(fName, lName, text, time);
+      Comment comment = new Comment(fName, lName, text, time, date);
       comments.add(comment);
     }
 
