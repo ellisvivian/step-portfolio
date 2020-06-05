@@ -92,18 +92,22 @@ function stop() {
   document.getElementById('continue').style.display = "block";
 }
 
+let max = -1;
+
 /*
  * Fetches comments from the server and adds them to the DOM.
  */
 function loadComments() {
   const commentContainer = document.getElementById('comment-container');
   commentContainer.innerHTML = '';
-  let count = 0;
   fetch('/data').then(response => response.json()).then((comments) => {
-    comments.forEach((comment) => {
-      commentContainer.appendChild(createComment(comment));
-      count ++;
-    })
+    if (max == -1 || max > comments.length) {
+      max = comments.length
+    }
+    let count;
+    for (count = 0; count < max; count ++) {
+      commentContainer.appendChild(createComment(comments[count]));
+    }
     document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + '. Total comments: ' + comments.length + '.';
   });
 }
@@ -124,20 +128,55 @@ function createComment(comment) {
   date.innerText = comment.dateTime;
 
   const text = document.createElement('p');
-  text.innerText = comment.commentText;  
+  text.innerText = comment.commentText; 
+
+  const bottomWrapper = document.createElement('div');
+  bottomWrapper.id = 'comment-bottom-wrapper';
+
+  const likesDisplay = document.createElement('div');
+  likesDisplay.id = 'likes-display';
+
+  if (comment.likes > 0) {
+    const heartIcon = document.createElement('i');
+    heartIcon.className = 'fa fa-heart';
+    heartIcon.id = "heart-icon";
+    likesDisplay.appendChild(heartIcon);
+    const likes = document.createElement('p');
+    likes.innerText = comment.likes;
+    likes.id = 'likes';
+    likesDisplay.appendChild(likes);
+  }
+
+  const commentButtons = document.createElement('div');
+  commentButtons.id = 'comment-buttons';
+
+  const likeButton = document.createElement('button');
+  likeButton.className = 'button icon-button';
+  const likeIcon = document.createElement('i');
+  likeIcon.className = 'fa fa-heart';
+  likeButton.appendChild(likeIcon);
+  likeButton.addEventListener('click', () => {
+    likeComment(comment);  
+  });
+  commentButtons.appendChild(likeButton);
 
   const deleteButton = document.createElement('button');
-  deleteButton.className = 'button';
-  deleteButton.id = "delete-button";
-  deleteButton.innerText = "Delete comment.";
+  deleteButton.className = 'button icon-button';
+  const trashIcon = document.createElement('i');
+  trashIcon.className = 'fa fa-trash';
+  deleteButton.appendChild(trashIcon);
   deleteButton.addEventListener('click', () => {
-      deleteComment(comment);
+    deleteComment(comment);
   });
+  commentButtons.appendChild(deleteButton);
+
+  bottomWrapper.appendChild(likesDisplay);
+  bottomWrapper.appendChild(commentButtons);
 
   commentBox.appendChild(name);
   commentBox.appendChild(date);
   commentBox.appendChild(text);
-  commentBox.appendChild(deleteButton);
+  commentBox.appendChild(bottomWrapper);
   return commentBox;
 }
 
@@ -145,19 +184,8 @@ function createComment(comment) {
  * Displays comments based on the inputted maximum number.
  */
 function displayMaxComments() {
-  const commentContainer = document.getElementById('comment-container');
-  commentContainer.innerHTML = "";
-  const max = document.getElementById('max-comments').value;
-  fetch('/data').then(response => response.json()).then((comments) => {
-    let count;
-    for (count = 0; count < max; count ++) {
-      if (count >= comments.length) {
-        break;
-      }
-      commentContainer.appendChild(createComment(comments[count]));
-    }
-    document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + '. Total comments: ' + comments.length + '.';
-  });
+  max = document.getElementById('max-comments').value;
+  loadComments();
 }
 
 /*
@@ -176,6 +204,18 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   const request = new Request('/delete-data', {method: 'POST', body: params});
+  const promise = fetch(request);
+  promise.then(loadComments);
+}
+
+/*
+ * Adds a like to the specified comment.
+ */
+function likeComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  params.append('likes', comment.likes + 1);
+  const request = new Request('/like-data', {method: 'POST', body: params});
   const promise = fetch(request);
   promise.then(loadComments);
 }

@@ -4,6 +4,7 @@
   --accent-color: #e7acaa;
   --text-color: #5b6564;
   --shadow-color: #9cb8a0;
+  --light-color: #e3cfcf;
 }
 
 .box {
@@ -144,6 +145,19 @@
   flex: 1;
 }
 
+.input {
+  background-color: var(--background-color);
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  font-weight: 450;
+}
+
+#comment-text {
+  width: 200px;
+  height: 100px;
+}
+
 #comment-count {
   font-style: italic;
 }
@@ -162,14 +176,15 @@
   max-width: 30%;
   max-height: 30%;
   background-color: var(--background-color);
-  transition: ease transform 0.5s, ease box-shadow 0.5s;
+  position: relative;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  transition: ease transform 0.5s;
 }
 
 .comment-box:hover {
-  box-shadow: 10px 10px var(--shadow-color);
-  transform: translate(-5px, -5px);
+  transform: scale(1.05);
 }
-
 #comment-name {
   margin-bottom: 0;
 }
@@ -179,6 +194,38 @@
   font-size: 12px;
 }
 
-#delete-button {
-  font-size: 12px;
+#comment-bottom-wrapper {
+  display: inline-flex;
+  position: absolute;
+  width: 85%;
+  bottom: 5%;
+  right: 5%;
+}
+
+#likes-display {
+  flex: 10;
+  text-align: left;
+  display: flex;
+}
+
+#heart-icon {
+  font-size: 14px;
+  color: var(--text-color);
+  padding-top: 4px;
+  padding-right: 3px;
+}
+
+#likes {
+  margin: 0;
+}
+
+#comment-buttons {
+  flex: 1;
+  display: flex;
+}
+
+.icon-button {
+  font-size: 14px;
+  padding: 3px 6px;
+  margin: 2px;
 }

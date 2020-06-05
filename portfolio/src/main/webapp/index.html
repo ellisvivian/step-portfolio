@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body id="body" onload="initialDisplay()">
     <div id="heading">
@@ -109,21 +109,21 @@
         <h4>Anything on your mind? Share your thoughts in a comment!</h4>
         <form action="/data" method="POST">
           <label for="first-name">First Name:</label><br>
-          <input type="text" id="first-name" name="first-name" onkeydown="return event.key != 'Enter';">
+          <input type="text" id="first-name" class="input" name="first-name" onkeydown="return event.key != 'Enter';">
           <br></br>
           <label for="last-name">Last Name:</label><br>
-          <input type="text" id="last-name" name="last-name" onkeydown="return event.key != 'Enter';">
+          <input type="text" id="last-name" class="input" name="last-name" onkeydown="return event.key != 'Enter';">
           <br></br>
           <label for="comment-text">Comment:</label><br>
-          <textarea id="comment-text" name="comment-text"></textarea>
+          <textarea id="comment-text" class="input" name="comment-text"></textarea>
           <br></br>
           <input type="submit" class="button" value="Submit.">
         </form>
-        <br></br>
+        <br>
         <h4>Not liking the number of comments you're seeing? Change the amount that can be displayed!</h4>
         <form>
           <label for="max-comments">Enter the maximum number of comments you want to see:</label><br>
-          <input type="number" id="max-comments" name="max-comments" min="0" onkeydown="return event.key != 'Enter';">
+          <input type="number" id="max-comments" class="input" name="max-comments" min="0" onkeydown="return event.key != 'Enter';">
         </form>
         <div id='comment-count'></div><br>
         <button class="button" onclick="displayMaxComments()">Enter.</button>

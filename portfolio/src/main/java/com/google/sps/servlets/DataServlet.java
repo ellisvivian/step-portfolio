@@ -30,27 +30,22 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.sps.data.Comment;
+import com.google.sps.data.Constants;
 import java.util.Date;
 import java.util.Calendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns some example content. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private static final String FIRST_NAME_PARAM = "first-name";
-  private static final String LAST_NAME_PARAM = "last-name";
-  private static final String TEXT_PARAM = "comment-text";
-  private static final String TIMESTAMP_PARAM = "time-stamp";
-  private static final String DATETIME_PARAM = "date-time";
-  private static final String ENTITY_PARAM = "Comment";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String fName = getParameter(request, FIRST_NAME_PARAM, "");
-    String lName = getParameter(request, LAST_NAME_PARAM, "");
-    String text = getParameter(request, TEXT_PARAM, "");
+    String fName = getParameter(request, Constants.FIRST_NAME_PARAM, "");
+    String lName = getParameter(request, Constants.LAST_NAME_PARAM, "");
+    String text = getParameter(request, Constants.TEXT_PARAM, "");
     long time = System.currentTimeMillis();
     
     Date now = Calendar.getInstance().getTime();
@@ -58,12 +53,13 @@ public class DataServlet extends HttpServlet {
     dateFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
     String date = dateFormat.format(now);
 
-    Entity commentEntity = new Entity(ENTITY_PARAM);
-    commentEntity.setProperty(FIRST_NAME_PARAM, fName);
-    commentEntity.setProperty(LAST_NAME_PARAM, lName);
-    commentEntity.setProperty(TEXT_PARAM, text);
-    commentEntity.setProperty(TIMESTAMP_PARAM, time);
-    commentEntity.setProperty(DATETIME_PARAM, date);
+    Entity commentEntity = new Entity(Constants.ENTITY_PARAM);
+    commentEntity.setProperty(Constants.FIRST_NAME_PARAM, fName);
+    commentEntity.setProperty(Constants.LAST_NAME_PARAM, lName);
+    commentEntity.setProperty(Constants.TEXT_PARAM, text);
+    commentEntity.setProperty(Constants.TIMESTAMP_PARAM, time);
+    commentEntity.setProperty(Constants.DATETIME_PARAM, date);
+    commentEntity.setProperty(Constants.LIKES_PARAM, 0);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -72,7 +68,8 @@ public class DataServlet extends HttpServlet {
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query(ENTITY_PARAM).addSort(TIMESTAMP_PARAM, SortDirection.DESCENDING);
+    Query query = new Query(Constants.ENTITY_PARAM).addSort(Constants.TIMESTAMP_PARAM, 
+                                                            SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -80,14 +77,15 @@ public class DataServlet extends HttpServlet {
     List<Comment> comments = new ArrayList<>();
 
     for (Entity entity: results.asIterable()) {
-      String fName = (String) entity.getProperty(FIRST_NAME_PARAM);
-      String lName = (String) entity.getProperty(LAST_NAME_PARAM);
-      String text = (String) entity.getProperty(TEXT_PARAM);
-      long time = (long) entity.getProperty(TIMESTAMP_PARAM);
-      String date = (String) entity.getProperty(DATETIME_PARAM);
+      String fName = (String) entity.getProperty(Constants.FIRST_NAME_PARAM);
+      String lName = (String) entity.getProperty(Constants.LAST_NAME_PARAM);
+      String text = (String) entity.getProperty(Constants.TEXT_PARAM);
+      long time = (long) entity.getProperty(Constants.TIMESTAMP_PARAM);
+      String date = (String) entity.getProperty(Constants.DATETIME_PARAM);
       long id = entity.getKey().getId();
+      long likes = (long) entity.getProperty(Constants.LIKES_PARAM);
 
-      Comment comment = new Comment(fName, lName, text, time, date, id);
+      Comment comment = new Comment(fName, lName, text, time, date, id, likes);
       comments.add(comment);
     }
 
