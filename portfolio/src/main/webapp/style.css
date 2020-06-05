@@ -164,6 +164,8 @@
   background-color: var(--background-color);
   transition: ease transform 0.5s, ease box-shadow 0.5s;
   position: relative;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .comment-box:hover {
@@ -180,14 +182,38 @@
   font-size: 12px;
 }
 
+#comment-bottom-wrapper {
+  display: inline-flex;
+  position: absolute;
+  width: 85%;
+  bottom: 5%;
+  right: 5%;
+}
+
+#likes-display {
+  flex: 10;
+  text-align: left;
+  display: flex;
+}
+
+#heart-icon {
+  font-size: 14px;
+  color: var(--text-color);
+  padding-top: 4px;
+  padding-right: 3px;
+}
+
+#likes {
+  margin: 0;
+}
+
 #comment-buttons {
-    position: absolute;
-    bottom: 5%;
-    right: 5%;
-    display: flex;
+  flex: 1;
+  display: flex;
 }
 
 .icon-button {
   font-size: 14px;
   padding: 3px 6px;
+  margin: 2px;
 }

@@ -124,16 +124,27 @@ function createComment(comment) {
   date.innerText = comment.dateTime;
 
   const text = document.createElement('p');
-  text.innerText = comment.commentText;  
+  text.innerText = comment.commentText; 
+
+  const bottomWrapper = document.createElement('div');
+  bottomWrapper.id = 'comment-bottom-wrapper';
+
+  const likesDisplay = document.createElement('div');
+  likesDisplay.id = 'likes-display';
+
+  if (comment.likes > 0) {
+    const heartIcon = document.createElement('i');
+    heartIcon.className = 'fa fa-heart';
+    heartIcon.id = "heart-icon";
+    likesDisplay.appendChild(heartIcon);
+    const likes = document.createElement('p');
+    likes.innerText = comment.likes;
+    likes.id = 'likes';
+    likesDisplay.appendChild(likes);
+  }
 
   const commentButtons = document.createElement('div');
   commentButtons.id = 'comment-buttons';
-
-  if (comment.likes > 0) {
-    const likes = document.createElement('p');
-    likes.innerText = comment.likes;
-    commentButtons.appendChild(likes);
-  }
 
   const likeButton = document.createElement('button');
   likeButton.className = 'button icon-button';
@@ -155,10 +166,13 @@ function createComment(comment) {
   });
   commentButtons.appendChild(deleteButton);
 
+  bottomWrapper.appendChild(likesDisplay);
+  bottomWrapper.appendChild(commentButtons);
+
   commentBox.appendChild(name);
   commentBox.appendChild(date);
   commentBox.appendChild(text);
-  commentBox.appendChild(commentButtons);
+  commentBox.appendChild(bottomWrapper);
   return commentBox;
 }
 
