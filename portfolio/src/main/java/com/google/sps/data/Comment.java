@@ -1,9 +1,7 @@
 package com.google.sps.data;
 import java.util.Date;
 
-/*
- * A user comment on the page.
- */
+/** A user comment on the page. */
 public final class Comment {
 
   private final String firstName;

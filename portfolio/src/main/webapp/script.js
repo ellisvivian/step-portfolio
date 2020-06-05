@@ -92,18 +92,22 @@ function stop() {
   document.getElementById('continue').style.display = "block";
 }
 
+let max = -1;
+
 /*
  * Fetches comments from the server and adds them to the DOM.
  */
 function loadComments() {
   const commentContainer = document.getElementById('comment-container');
   commentContainer.innerHTML = '';
-  let count = 0;
   fetch('/data').then(response => response.json()).then((comments) => {
-    comments.forEach((comment) => {
-      commentContainer.appendChild(createComment(comment));
-      count ++;
-    })
+    if (max == -1 || max > comments.length) {
+      max = comments.length
+    }
+    let count;
+    for (count = 0; count < max; count ++) {
+      commentContainer.appendChild(createComment(comments[count]));
+    }
     document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + '. Total comments: ' + comments.length + '.';
   });
 }
@@ -180,19 +184,8 @@ function createComment(comment) {
  * Displays comments based on the inputted maximum number.
  */
 function displayMaxComments() {
-  const commentContainer = document.getElementById('comment-container');
-  commentContainer.innerHTML = "";
-  const max = document.getElementById('max-comments').value;
-  fetch('/data').then(response => response.json()).then((comments) => {
-    let count;
-    for (count = 0; count < max; count ++) {
-      if (count >= comments.length) {
-        break;
-      }
-      commentContainer.appendChild(createComment(comments[count]));
-    }
-    document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + '. Total comments: ' + comments.length + '.';
-  });
+  max = document.getElementById('max-comments').value;
+  loadComments();
 }
 
 /*
