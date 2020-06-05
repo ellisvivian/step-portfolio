@@ -221,7 +221,7 @@ function deleteComment(comment) {
 function likeComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
-  params.append('likes', comment.likes);
+  params.append('likes', comment.likes + 1);
   const request = new Request('/like-data', {method: 'POST', body: params});
   const promise = fetch(request);
   promise.then(loadComments);

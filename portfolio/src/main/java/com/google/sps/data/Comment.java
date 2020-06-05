@@ -14,7 +14,8 @@ public final class Comment {
   private final long id;
   private long likes; 
 
-  public Comment(String firstName, String lastName, String commentText, long timeStamp, String dateTime, long id, long likes) {
+  public Comment(String firstName, String lastName, String commentText, 
+                 long timeStamp, String dateTime, long id, long likes) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.commentText = commentText;

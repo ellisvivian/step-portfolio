@@ -12,6 +12,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.sps.data.Constants;
 
 /** Servlet responsible for deleting comments. */
 @WebServlet("/delete-data")
@@ -21,20 +22,20 @@ public class DeleteDataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-    if (request.getParameter("id") != null) {
+    if (request.getParameter(Constants.ID_PARAM) != null) {
       // delete specified comment
-      long id = Long.parseLong(request.getParameter("id"));
-      Key commentKey = KeyFactory.createKey("Comment", id);
+      long id = Long.parseLong(request.getParameter(Constants.ID_PARAM));
+      Key commentKey = KeyFactory.createKey(Constants.ENTITY_PARAM, id);
       datastore.delete(commentKey);
       
     } else {
       // delete all comments
-      Query query = new Query("Comment");
+      Query query = new Query(Constants.ENTITY_PARAM);
       PreparedQuery results = datastore.prepare(query);
 
       for (Entity entity : results.asIterable()) {
         long id = entity.getKey().getId();
-        Key commentKey = KeyFactory.createKey("Comment", id);
+        Key commentKey = KeyFactory.createKey(Constants.ENTITY_PARAM, id);
         datastore.delete(commentKey);
       }
     }

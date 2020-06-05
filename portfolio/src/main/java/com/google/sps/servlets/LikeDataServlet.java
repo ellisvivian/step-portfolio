@@ -12,6 +12,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.sps.data.Constants;
 
 /** Servlet responsible for liking comments. */
 @WebServlet("/like-data")
@@ -19,17 +20,16 @@ public class LikeDataServlet extends HttpServlet {
   
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long likes = Long.parseLong(request.getParameter("likes"));
-    long id = Long.parseLong(request.getParameter("id"));
-    likes ++;
+    long likes = Long.parseLong(request.getParameter(Constants.LIKES_PARAM));
+    long id = Long.parseLong(request.getParameter(Constants.ID_PARAM));
   
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("Comment");
+    Query query = new Query(Constants.ENTITY_PARAM);
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity entity : results.asIterable()) {
       if (id == entity.getKey().getId()) {
-        entity.setProperty("likes", likes);
+        entity.setProperty(Constants.LIKES_PARAM, likes);
         datastore.put(entity);
         break;
       }
