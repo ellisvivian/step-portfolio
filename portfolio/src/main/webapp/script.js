@@ -52,6 +52,7 @@ let timer;
 function initialDisplay() {
   count = -1;
   start();
+  getLoginStatus();
   loadComments();
 }
 
@@ -218,4 +219,19 @@ function likeComment(comment) {
   const request = new Request('/like-data', {method: 'POST', body: params});
   const promise = fetch(request);
   promise.then(loadComments);
+}
+
+/*
+ * Loads certain comment functionality based on the user's login status.
+ */
+function getLoginStatus() {
+  const promise = fetch('/login-data').then(response => response.text()).then((status) => {
+    if (status.localeCompare('true\n') == 0){
+      document.getElementById('comment-controls').style.display = 'block';
+    } else {
+      const signInButton = document.createElement('button');
+      signInButton.innerText = "Login to post a comment.";
+      document.getElementById('comment-section').appendChild(signInButton);
+    }
+  });
 }

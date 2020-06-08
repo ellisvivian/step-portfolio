@@ -142,6 +142,7 @@
 }
 
 #comment-controls {
+  display: none;
   flex: 1;
 }
 
