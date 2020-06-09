@@ -142,8 +142,11 @@
 }
 
 #comment-controls {
-  display: none;
   flex: 1;
+}
+
+#comment-submission {
+  display: none;
 }
 
 .input {

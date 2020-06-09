@@ -227,11 +227,22 @@ function likeComment(comment) {
 function getLoginStatus() {
   const promise = fetch('/login-data').then(response => response.json()).then((json) => {
     if (json['loginStatus']) {
-      document.getElementById('comment-controls').style.display = 'block';
+      document.getElementById('comment-submission').style.display = 'block';
+      const userGreeting = document.getElementById('user-greeting');
+      const greeting = document.createElement('p');
+      greeting.innerText = "Hi " + json['userEmail'] + "!";
+      const logoutButton = document.createElement('button');
+      logoutButton.className = 'button';
+      logoutButton.innerText = 'Logout.';
+      logoutButton.addEventListener('click', () => {
+        window.location.href = json['logoutUrl']
+      });
+      userGreeting.appendChild(greeting);
+      userGreeting.appendChild(logoutButton);
     } else {
-      const loginButton = document.createElement('button');
-      loginButton.className = 'button';
-      document.getElementById('comment-container').appendChild(loginButton);
+        
     }
   });
 }
+
+
