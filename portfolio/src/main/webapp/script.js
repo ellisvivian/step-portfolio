@@ -109,7 +109,8 @@ function loadComments() {
     for (count = 0; count < max; count ++) {
       commentContainer.appendChild(createComment(comments[count]));
     }
-    document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + '. Total comments: ' + comments.length + '.';
+    document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + 
+        '. Total comments: ' + comments.length + '.';
   });
 }
 
@@ -235,8 +236,7 @@ function getLoginStatus() {
       const userGreeting = document.getElementById('user-greeting');
       userGreeting.innerHTML = '';
       const greeting = document.createElement('p');
-      greeting.innerText = 'Hi ' + json['userName'] + '!\n' + 
-                            ' ('  + json['userEmail'] + ')';
+      greeting.innerText = 'Hi ' + json['userName'] + '!\n' + ' (' + json['userEmail'] + ')';
       const changeNameButton = document.createElement('button');
       changeNameButton.className = 'button';
       changeNameButton.innerText = 'Change name.';

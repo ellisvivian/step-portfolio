@@ -13,11 +13,7 @@ import com.google.sps.data.Constants;
 
 @WebServlet("/login-data")
 public class LoginDataServlet extends HttpServlet {
-  public static final String LOGIN_STATUS_PARAM = "loginStatus";
-  public static final String LOGOUT_URL_PARAM = "logoutUrl";
-  public static final String USER_EMAIL_PARAM = "userEmail";
-  public static final String LOGIN_URL_PARAM = "loginUrl";
-  public static final String USER_NAME_PARAM = "userName";
+
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -26,18 +22,18 @@ public class LoginDataServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     Boolean loginStatus = userService.isUserLoggedIn();
     String json = "{";
-    json += "\"" + LOGIN_STATUS_PARAM + "\": " + loginStatus + ", ";
+    json += "\"" + Constants.LOGIN_STATUS_PARAM + "\": " + loginStatus + ", ";
 
     if (loginStatus) {
       String logoutUrl = userService.createLogoutURL("/");
       String userEmail = userService.getCurrentUser().getEmail();
       String userName = getUserName(userService.getCurrentUser().getUserId());
-      json += "\"" + LOGOUT_URL_PARAM + "\": \"" + logoutUrl + "\", ";
-      json += "\"" + USER_EMAIL_PARAM + "\": \"" + userEmail + "\", ";
-      json += "\"" + USER_NAME_PARAM + "\": \"" + userName + "\"}";
+      json += "\"" + Constants.LOGOUT_URL_PARAM + "\": \"" + logoutUrl + "\", ";
+      json += "\"" + Constants.USER_EMAIL_PARAM + "\": \"" + userEmail + "\", ";
+      json += "\"" + Constants.USER_NAME_PARAM + "\": \"" + userName + "\"}";
     } else {
       String loginUrl = userService.createLoginURL("/name-data");
-      json += "\"" + LOGIN_URL_PARAM + "\": \"" + loginUrl + "\"}";
+      json += "\"" + Constants.LOGIN_URL_PARAM + "\": \"" + loginUrl + "\"}";
     }
 
     response.setContentType("application/json");

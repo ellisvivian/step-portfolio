@@ -12,7 +12,7 @@ public final class Comment {
   private long likes; 
 
   public Comment(long id, String name, String commentText, 
-                 long timeStamp, String dateTime, long likes) {
+      long timeStamp, String dateTime, long likes) {
     this.id = id;
     this.name = name;
     this.commentText = commentText;

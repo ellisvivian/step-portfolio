@@ -72,8 +72,8 @@ public class DataServlet extends HttpServlet {
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query(Constants.COMMENT_ENTITY_PARAM).addSort(Constants.TIMESTAMP_PARAM, 
-                                                            SortDirection.DESCENDING);
+    Query query = new Query(Constants.COMMENT_ENTITY_PARAM)
+        .addSort(Constants.TIMESTAMP_PARAM, SortDirection.DESCENDING);
     Query userQuery = new Query(Constants.USER_ENTITY_PARAM);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
