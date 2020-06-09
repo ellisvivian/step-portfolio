@@ -227,8 +227,13 @@ function likeComment(comment) {
 function getLoginStatus() {
   const promise = fetch('/login-data').then(response => response.json()).then((json) => {
     if (json['loginStatus']) {
+      // Display form to submit comment and hide login statement.
       document.getElementById('comment-submission').style.display = 'block';
+      document.getElementById('login-statement').style.display = 'none';
+
+      // Add greeting to known user and logout button.
       const userGreeting = document.getElementById('user-greeting');
+      userGreeting.innerHTML = '';
       const greeting = document.createElement('p');
       greeting.innerText = "Hi " + json['userEmail'] + "!";
       const logoutButton = document.createElement('button');
@@ -239,10 +244,26 @@ function getLoginStatus() {
       });
       userGreeting.appendChild(greeting);
       userGreeting.appendChild(logoutButton);
+
     } else {
-        
+      // Hide form to submit comment and display login statement.
+      document.getElementById('comment-submission').style.display = 'none';
+      document.getElementById('login-statement').style.display = 'block';
+
+      // Add statement to unknown user and login button.
+      const loginStatement = document.getElementById('login-statement');
+      loginStatement.innerHTML = '';
+      const statement = document.createElement('p');
+      statement.innerText = "Login to post a comment.";
+      const loginButton = document.createElement('button');
+      loginButton.className = 'button';
+      loginButton.innerText = 'Login.';
+      loginButton.addEventListener('click', () => {
+        window.location.href = json['loginUrl']
+      });
+      loginStatement.appendChild(statement);
+      loginStatement.appendChild(loginButton);
     }
   });
 }
-
 

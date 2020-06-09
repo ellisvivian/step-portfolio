@@ -149,6 +149,10 @@
   display: none;
 }
 
+#login-statement {
+  display: none;
+}
+
 .input {
   background-color: var(--background-color);
   font-family: 'Open Sans', sans-serif;
