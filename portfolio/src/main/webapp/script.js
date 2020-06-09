@@ -235,7 +235,8 @@ function getLoginStatus() {
       const userGreeting = document.getElementById('user-greeting');
       userGreeting.innerHTML = '';
       const greeting = document.createElement('p');
-      greeting.innerText = "Hi " + json['userEmail'] + "!";
+      greeting.innerText = 'Hi ' + json['userName'] + '!\n' + 
+                            ' ('  + json['userEmail'] + ')';
       const logoutButton = document.createElement('button');
       logoutButton.className = 'button';
       logoutButton.innerText = 'Logout.';
