@@ -50,6 +50,12 @@ public class NameDataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    UserService userService = UserServiceFactory.getUserService();
+    String userId = userService.getCurrentUser().getUserId();
+    // if (getUserName(userId) != null) {
+    //   response.sendRedirect("/index.html");
+    // }
+
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
 
@@ -59,5 +65,19 @@ public class NameDataServlet extends HttpServlet {
     out.println("<br/>");
     out.println("<button>Submit</button>");
     out.println("</form>");
+  }
+
+  /** Returns the nickname of the user or null if they do not yet have one. */
+  private String getUserName(String id) {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query(Constants.USER_ENTITY_PARAM);
+    PreparedQuery results = datastore.prepare(query);
+    String name = null;
+    for (Entity entity : results.asIterable()) {
+      if (id.equals((String) entity.getProperty(Constants.ID_PARAM))) {
+        name = (String) entity.getProperty(Constants.NAME_PARAM);
+      }
+    }
+    return name;
   }
 }

@@ -114,6 +114,8 @@ function loadComments() {
   });
 }
 
+let currentUserId;
+
 /*
  * Creates an element that represents a comment.
  */
@@ -138,13 +140,13 @@ function createComment(comment) {
   const likesDisplay = document.createElement('div');
   likesDisplay.id = 'likes-display';
 
-  if (comment.likes > 0) {
+  if (comment.likes.length - 1 > 0) {
     const heartIcon = document.createElement('i');
     heartIcon.className = 'fa fa-heart';
     heartIcon.id = "heart-icon";
     likesDisplay.appendChild(heartIcon);
     const likes = document.createElement('p');
-    likes.innerText = comment.likes;
+    likes.innerText = comment.likes.length - 1;
     likes.id = 'likes';
     likesDisplay.appendChild(likes);
   }
@@ -154,6 +156,11 @@ function createComment(comment) {
 
   const likeButton = document.createElement('button');
   likeButton.className = 'button icon-button';
+  if (currentUserId != null) {
+    if (comment.likes.includes(currentUserId)) {
+      likeButton.className = 'button icon-button inverted-button';
+    }
+  }
   const likeIcon = document.createElement('i');
   likeIcon.className = 'fa fa-heart';
   likeButton.appendChild(likeIcon);
@@ -216,7 +223,6 @@ function deleteComment(comment) {
 function likeComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
-  params.append('likes', comment.likes + 1);
   const request = new Request('/like-data', {method: 'POST', body: params});
   const promise = fetch(request);
   promise.then(loadComments);
@@ -228,11 +234,13 @@ function likeComment(comment) {
 function getLoginStatus() {
   const promise = fetch('/login-data').then(response => response.json()).then((json) => {
     if (json['loginStatus']) {
+      currentUserId = json['user-id'];
+
       // Display form to submit comment and hide login statement.
       document.getElementById('comment-submission').style.display = 'block';
       document.getElementById('login-statement').style.display = 'none';
 
-      // Add greeting to known user and logout button.
+      // Add greeting to known user, change name button, and logout button.
       const userGreeting = document.getElementById('user-greeting');
       userGreeting.innerHTML = '';
       const greeting = document.createElement('p');
@@ -240,7 +248,7 @@ function getLoginStatus() {
       const changeNameButton = document.createElement('button');
       changeNameButton.className = 'button';
       changeNameButton.innerText = 'Change name.';
-      changeNameButton.addEventListener('click', () => {
+      changeNameButton.addEventListener('click', () => {        
         window.location.href = '/name-data';
       });
       const logoutButton = document.createElement('button');
@@ -255,6 +263,8 @@ function getLoginStatus() {
       userGreeting.appendChild(logoutButton);
 
     } else {
+      currentUserId = null;
+
       // Hide form to submit comment and display login statement.
       document.getElementById('comment-submission').style.display = 'none';
       document.getElementById('login-statement').style.display = 'block';

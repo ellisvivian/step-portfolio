@@ -7,7 +7,7 @@ public final class Constants {
   public static final String TIMESTAMP_PARAM = "time-stamp";
   public static final String DATETIME_PARAM = "date-time";
   public static final String LIKES_PARAM = "likes";
-  public static final String USER_ID_PARAM = "user-id";
+  public static final String USER_ID_PARAM = "user-id"; // also used as Login constant
   public static final String COMMENT_ENTITY_PARAM = "Comment";
 
   // Comment and User constants

@@ -241,3 +241,8 @@
   padding: 3px 6px;
   margin: 2px;
 }
+
+.inverted-button {
+  background-color: var(--box-color);
+  color: var(--accent-color);
+}

@@ -62,7 +62,9 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(Constants.TEXT_PARAM, text);
     commentEntity.setProperty(Constants.TIMESTAMP_PARAM, time);
     commentEntity.setProperty(Constants.DATETIME_PARAM, date);
-    commentEntity.setProperty(Constants.LIKES_PARAM, 0);
+    List<String> likes = new ArrayList<>();
+    likes.add(""); // add empty entry to prevent from becoming null as an entity property
+    commentEntity.setProperty(Constants.LIKES_PARAM, likes);
     commentEntity.setProperty(Constants.USER_ID_PARAM, userId);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -87,9 +89,9 @@ public class DataServlet extends HttpServlet {
       String text = (String) entity.getProperty(Constants.TEXT_PARAM);
       long time = (long) entity.getProperty(Constants.TIMESTAMP_PARAM);
       String date = (String) entity.getProperty(Constants.DATETIME_PARAM);
-      long likes = (long) entity.getProperty(Constants.LIKES_PARAM);
-      String userId = (String) entity.getProperty(Constants.USER_ID_PARAM);
+      List<String> likes = (List<String>) entity.getProperty(Constants.LIKES_PARAM);
 
+      String userId = (String) entity.getProperty(Constants.USER_ID_PARAM);
       String name = "";
       for (Entity userEntity : userResults.asIterable()) {
         if (userId.equals((String) userEntity.getProperty(Constants.ID_PARAM))) {
