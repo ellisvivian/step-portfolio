@@ -225,13 +225,13 @@ function likeComment(comment) {
  * Loads certain comment functionality based on the user's login status.
  */
 function getLoginStatus() {
-  const promise = fetch('/login-data').then(response => response.text()).then((status) => {
-    if (status.localeCompare('true\n') == 0){
+  const promise = fetch('/login-data').then(response => response.json()).then((json) => {
+    if (json['loginStatus']) {
       document.getElementById('comment-controls').style.display = 'block';
     } else {
-      const signInButton = document.createElement('button');
-      signInButton.innerText = "Login to post a comment.";
-      document.getElementById('comment-section').appendChild(signInButton);
+      const loginButton = document.createElement('button');
+      loginButton.className = 'button';
+      document.getElementById('comment-container').appendChild(loginButton);
     }
   });
 }

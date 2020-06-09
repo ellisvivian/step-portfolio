@@ -22,8 +22,4 @@ public final class Comment {
     this.id = id;
     this.likes = likes;
   }
-
-  public void addLike() {
-    likes ++;
-  }
 }

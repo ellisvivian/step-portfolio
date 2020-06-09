@@ -11,25 +11,31 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/login-data")
 public class LoginDataServlet extends HttpServlet {
+  public static final String LOGIN_STATUS_PARAM = "loginStatus";
+  public static final String LOGOUT_URL_PARAM = "logoutUrl";
+  public static final String USER_EMAIL_PARAM = "userEmail";
+  public static final String LOGIN_URL_PARAM = "loginUrl";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html");
 
     UserService userService = UserServiceFactory.getUserService();
-    // if (userService.isUserLoggedIn()) {
-    //   String userEmail = userService.getCurrentUser().getEmail();
-    //   String logoutUrl = userService.createLogoutURL("/");
+    Boolean loginStatus = userService.isUserLoggedIn();
+    String json = "{";
+    json += "\"" + LOGIN_STATUS_PARAM + "\": " + loginStatus + ", ";
 
-    //   response.getWriter().println("<p>Hi " + userEmail + ", it's great to have you here!</p>");
-    //   response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
-    // } else {
-    //   String loginUrl = userService.createLoginURL("/");
+    if (loginStatus) {
+      String logoutUrl = userService.createLogoutURL("/");
+      String userEmail = userService.getCurrentUser().getEmail();
+      json += "\"" + LOGOUT_URL_PARAM + "\": \"" + logoutUrl + "\", ";
+      json += "\"" + USER_EMAIL_PARAM + "\": \"" + userEmail + "\"}";
+    } else {
+      String loginUrl = userService.createLoginURL("/");
+      json += "\"" + LOGIN_URL_PARAM + "\": \"" + loginUrl + "\"}";
+    }
 
-    //   response.getWriter().println("<p>I don't seem to know you yet. Let's change that.</p>");
-    //   response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
-    // }
-    Boolean status = userService.isUserLoggedIn();
-    response.getWriter().println(status);
+    response.setContentType("application/json");
+    response.getWriter().println(json);
   }
 }
