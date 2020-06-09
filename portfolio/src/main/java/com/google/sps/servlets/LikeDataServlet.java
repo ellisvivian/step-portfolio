@@ -24,7 +24,7 @@ public class LikeDataServlet extends HttpServlet {
     long id = Long.parseLong(request.getParameter(Constants.ID_PARAM));
   
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query(Constants.ENTITY_PARAM);
+    Query query = new Query(Constants.COMMENT_ENTITY_PARAM);
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity entity : results.asIterable()) {

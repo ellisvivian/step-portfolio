@@ -107,18 +107,17 @@
     <div id="comment-section" class="box">
       <div id="comment-controls">
         <h4>Anything on your mind? Share your thoughts in a comment!</h4>
-        <form action="/data" method="POST">
-          <label for="first-name">First Name:</label><br>
-          <input type="text" id="first-name" class="input" name="first-name" onkeydown="return event.key != 'Enter';">
-          <br></br>
-          <label for="last-name">Last Name:</label><br>
-          <input type="text" id="last-name" class="input" name="last-name" onkeydown="return event.key != 'Enter';">
-          <br></br>
-          <label for="comment-text">Comment:</label><br>
-          <textarea id="comment-text" class="input" name="comment-text"></textarea>
-          <br></br>
-          <input type="submit" class="button" value="Submit.">
-        </form>
+        <div id="comment-submission">
+          <div id="user-greeting"></div>
+          <br>
+          <form action="/data" method="POST">
+            <label for="comment-text">Comment:</label><br>
+            <textarea id="comment-text" class="input" name="comment-text"></textarea>
+            <br></br>
+            <input type="submit" class="button" value="Submit.">
+          </form>
+        </div>
+        <div id="login-statement"></div>
         <br>
         <h4>Not liking the number of comments you're seeing? Change the amount that can be displayed!</h4>
         <form>
