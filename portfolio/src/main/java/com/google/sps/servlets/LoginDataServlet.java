@@ -31,7 +31,7 @@ public class LoginDataServlet extends HttpServlet {
       json += "\"" + LOGOUT_URL_PARAM + "\": \"" + logoutUrl + "\", ";
       json += "\"" + USER_EMAIL_PARAM + "\": \"" + userEmail + "\"}";
     } else {
-      String loginUrl = userService.createLoginURL("/");
+      String loginUrl = userService.createLoginURL("/name-data");
       json += "\"" + LOGIN_URL_PARAM + "\": \"" + loginUrl + "\"}";
     }
 
