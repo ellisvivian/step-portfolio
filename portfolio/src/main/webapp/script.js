@@ -237,13 +237,21 @@ function getLoginStatus() {
       const greeting = document.createElement('p');
       greeting.innerText = 'Hi ' + json['userName'] + '!\n' + 
                             ' ('  + json['userEmail'] + ')';
+      const changeNameButton = document.createElement('button');
+      changeNameButton.className = 'button';
+      changeNameButton.innerText = 'Change name.';
+      changeNameButton.addEventListener('click', () => {
+        window.location.href = '/name-data';
+      });
       const logoutButton = document.createElement('button');
       logoutButton.className = 'button';
+      logoutButton.id = 'logout-button';
       logoutButton.innerText = 'Logout.';
       logoutButton.addEventListener('click', () => {
-        window.location.href = json['logoutUrl']
+        window.location.href = json['logoutUrl'];
       });
       userGreeting.appendChild(greeting);
+      userGreeting.appendChild(changeNameButton);
       userGreeting.appendChild(logoutButton);
 
     } else {
