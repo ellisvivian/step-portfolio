@@ -83,6 +83,7 @@ public class DataServlet extends HttpServlet {
     List<Comment> comments = new ArrayList<>();
 
     for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();
       String text = (String) entity.getProperty(Constants.TEXT_PARAM);
       long time = (long) entity.getProperty(Constants.TIMESTAMP_PARAM);
       String date = (String) entity.getProperty(Constants.DATETIME_PARAM);
@@ -97,7 +98,7 @@ public class DataServlet extends HttpServlet {
         }
       }
 
-      Comment comment = new Comment(name, text, time, date, likes);
+      Comment comment = new Comment(id, name, text, time, date, likes);
       comments.add(comment);
     }
 
