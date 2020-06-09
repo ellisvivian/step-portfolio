@@ -122,7 +122,7 @@ function createComment(comment) {
 
   const name = document.createElement('h3');
   name.id = 'comment-name';
-  name.innerText = comment.firstName + " " + comment.lastName;
+  name.innerText = comment.name;
 
   const date = document.createElement('p');
   date.id = 'comment-date';

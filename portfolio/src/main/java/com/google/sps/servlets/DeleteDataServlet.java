@@ -25,17 +25,17 @@ public class DeleteDataServlet extends HttpServlet {
     if (request.getParameter(Constants.ID_PARAM) != null) {
       // delete specified comment
       long id = Long.parseLong(request.getParameter(Constants.ID_PARAM));
-      Key commentKey = KeyFactory.createKey(Constants.ENTITY_PARAM, id);
+      Key commentKey = KeyFactory.createKey(Constants.COMMENT_ENTITY_PARAM, id);
       datastore.delete(commentKey);
       
     } else {
       // delete all comments
-      Query query = new Query(Constants.ENTITY_PARAM);
+      Query query = new Query(Constants.COMMENT_ENTITY_PARAM);
       PreparedQuery results = datastore.prepare(query);
 
       for (Entity entity : results.asIterable()) {
         long id = entity.getKey().getId();
-        Key commentKey = KeyFactory.createKey(Constants.ENTITY_PARAM, id);
+        Key commentKey = KeyFactory.createKey(Constants.COMMENT_ENTITY_PARAM, id);
         datastore.delete(commentKey);
       }
     }

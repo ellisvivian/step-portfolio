@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.sps.data.Constants;
 
 @WebServlet("/name-data")
 public class NameDataServlet extends HttpServlet {
@@ -21,13 +22,13 @@ public class NameDataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {    
     UserService userService = UserServiceFactory.getUserService();
     
-    String name = request.getParameter("name");
+    String name = request.getParameter(Constants.NAME_PARAM);
     String id = userService.getCurrentUser().getUserId();
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Entity userEntity = new Entity("User");
-    userEntity.setProperty("id", id);
-    userEntity.setProperty("name", name);
+    Entity userEntity = new Entity(Constants.USER_ENTITY_PARAM);
+    userEntity.setProperty(Constants.ID_PARAM, id);
+    userEntity.setProperty(Constants.NAME_PARAM, name);
     datastore.put(userEntity);
 
     response.sendRedirect("/index.html");
