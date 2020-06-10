@@ -141,6 +141,26 @@
   display: flex;
 }
 
+#name-form-container {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  padding-top: 15%;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#name-form {
+  background-color: var(--box-color);
+  margin: auto;
+  padding: 20px;
+  width: 400px;
+}
+
 #comment-controls {
   flex: 1;
 }

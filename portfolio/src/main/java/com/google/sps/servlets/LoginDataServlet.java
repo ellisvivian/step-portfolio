@@ -34,7 +34,7 @@ public class LoginDataServlet extends HttpServlet {
       json += "\"" + Constants.USER_ID_PARAM + "\": \"" + userId + "\", ";
       json += "\"" + Constants.USER_NAME_PARAM + "\": \"" + userName + "\"}";
     } else {
-      String loginUrl = userService.createLoginURL("/name-data");
+      String loginUrl = userService.createLoginURL("/");
       json += "\"" + Constants.LOGIN_URL_PARAM + "\": \"" + loginUrl + "\"}";
     }
 
@@ -42,7 +42,7 @@ public class LoginDataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-  /** Returns the nickname of the user or null if they do not yet have one. */
+  /** Returns the nickname of the user or the empty string if they do not yet have one. */
   private String getUserName(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query(Constants.USER_ENTITY_PARAM);

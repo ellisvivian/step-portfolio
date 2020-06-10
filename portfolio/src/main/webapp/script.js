@@ -232,9 +232,15 @@ function likeComment(comment) {
  * Loads certain comment functionality based on the user's login status.
  */
 function getLoginStatus() {
+
   const promise = fetch('/login-data').then(response => response.json()).then((json) => {
     if (json['loginStatus']) {
       currentUserId = json['user-id'];
+      const namePromise = fetch('/name-data').then(response => response.text()).then((name) => {
+        if (name.localeCompare('\n') == 0) {
+          changeName();
+        }
+      });
 
       // Display form to submit comment and hide login statement.
       document.getElementById('comment-submission').style.display = 'block';
@@ -249,7 +255,7 @@ function getLoginStatus() {
       changeNameButton.className = 'button';
       changeNameButton.innerText = 'Change name.';
       changeNameButton.addEventListener('click', () => {        
-        window.location.href = '/name-data';
+        changeName();
       });
       const logoutButton = document.createElement('button');
       logoutButton.className = 'button';
@@ -284,4 +290,18 @@ function getLoginStatus() {
       loginStatement.appendChild(loginButton);
     }
   });
+}
+
+/*
+ * Presents the user with a form to change their name.
+ */
+function changeName() {
+  document.getElementById('name-form-container').style.display = 'block';
+}
+
+/*
+ * Hides the form for the user to change their name.
+ */
+function hideChangeName() {
+  document.getElementById('name-form-container').style.displau = 'none';
 }

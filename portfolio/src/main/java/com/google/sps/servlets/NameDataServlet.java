@@ -51,28 +51,18 @@ public class NameDataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
-    String userId = userService.getCurrentUser().getUserId();
-    // if (getUserName(userId) != null) {
-    //   response.sendRedirect("/index.html");
-    // }
+    String name = getUserName(userService.getCurrentUser().getUserId());
 
     response.setContentType("text/html");
-    PrintWriter out = response.getWriter();
-
-    out.println("<p>Enter your name here: </p>");
-    out.println("<form method=\"POST\" action=\"/name-data\">");
-    out.println("<input name=\"name\"/>");
-    out.println("<br/>");
-    out.println("<button>Submit</button>");
-    out.println("</form>");
+    response.getWriter().println(name);
   }
 
-  /** Returns the nickname of the user or null if they do not yet have one. */
+  /** Returns the nickname of the user or an empty string if they do not yet have one. */
   private String getUserName(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query(Constants.USER_ENTITY_PARAM);
     PreparedQuery results = datastore.prepare(query);
-    String name = null;
+    String name = "";
     for (Entity entity : results.asIterable()) {
       if (id.equals((String) entity.getProperty(Constants.ID_PARAM))) {
         name = (String) entity.getProperty(Constants.NAME_PARAM);
