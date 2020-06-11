@@ -118,14 +118,14 @@
 .img-experience {
   display: none;
   animation-name: fade;
-  animation-duration: 3s;
+  animation-duration: 1s;
   padding-bottom: 10px;
 }
 
 .descrip-experience {
   display: none;
   animation-name: fade;
-  animation-duration: 3s;
+  animation-duration: 1s;
   padding-bottom: 10px;
 }
 
