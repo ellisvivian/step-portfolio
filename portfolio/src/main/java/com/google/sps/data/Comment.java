@@ -1,5 +1,7 @@
 package com.google.sps.data;
+
 import java.util.Date;
+import java.util.List;
 
 /** A user comment on the page. */
 public final class Comment {
@@ -9,10 +11,10 @@ public final class Comment {
   private final String commentText;
   private final long timeStamp;
   private final String dateTime;
-  private long likes; 
+  private final List<String> likes; 
 
   public Comment(long id, String name, String commentText, 
-                 long timeStamp, String dateTime, long likes) {
+      long timeStamp, String dateTime, List<String> likes) {
     this.id = id;
     this.name = name;
     this.commentText = commentText;

@@ -5,6 +5,7 @@
     <title>Vivian Ellis</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0WbMW35h_5E3JFz0O8TO0wKeuwoLvC48&callback=initMap"></script>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
@@ -62,47 +63,50 @@
       </div>
       <div id="my-experiences" class="box">
         <h1>Important Aspects of My Life</h1>
-        <div class="experience">
-          <img id="img" src="/images/1.jpg" alt="Image of Cousins" width="504" height="378">
-          <p id="description">Family has always been something really important to me, especially my cousins. 
+        <div class="img-map-wrapper">
+          <img class="img-experience" id="img" src="/images/1.jpg" alt="Image of Cousins" width="504" height="378">
+          <img class="img-experience" id="img" src="/images/2.jpg" alt="Image of Wiess" width="504" height="378">
+          <img class="img-experience" id="img" src="/images/3.jpg" alt="Image of Europe Trip" width="504" height="378">
+          <img class="img-experience" id="img" src="/images/4.jpg" alt="Image of Cheer Competition" width="504" height="378">
+          <div id="map"></div>
+        </div>
+        <p class="descrip-experience" id="description">Family has always been something really important to me, especially my cousins. 
             Every year, we try to get together in what we call "Cuz Unite". During Cuz Unites, 
             we go on wild adventures, play games, and just spend time catching up and enjoying 
             each other's company. Around my cousins I always feel loved and free to be myself.
-          </p>
-        </div>
-        <div class="experience">
-          <img id="img" src="/images/2.jpg" alt="Image of Wiess" width="504" height="378">
-          <p id="description">At Rice, students are randomly split into 11 residential colleges, which will serve as an
+        </p>
+        <p class="descrip-experience" id="description">At Rice, students are randomly split into 11 residential colleges, which will serve as an
             inclusive community throughout their four years on campus (and beyond). My college is 
             Wiess College, and from the moment I was welcomed during orientation week it has felt 
             like home. From the friendly faces I see in commons every day to our quirky and exciting 
             traditions, I am truly grateful for my Team Family Wiess!
-          </p>
-        </div>
-        <div class="experience">
-          <img id="img" src="/images/3.jpg" alt="Image of Europe Trip" width="504" height="378">
-          <p id="description">The summer after my senior year of high school, I went on an epic month-long European vacation 
+        </p>
+        <p class="descrip-experience" id="description">The summer after my senior year of high school, I went on an epic month-long European vacation 
             with my family, where we visited The Netherlands, Belgium, France, Scotland, and England. It was 
             such an amazing experience to get to see and explore so many different places, and I am so  
             appreciative of my family for making it happen. Hopefully I can continue to travel the world 
             on my own someday.
-          </p>
-        </div>
-        <div class="experience">
-          <img id="img" src="/images/4.jpg" alt="Image of Cheer Competition" width="504" height="378">
-          <p id="description">Ever since I was really little and just twirling around the house with scarves, 
+        </p>
+          <p class="descrip-experience" id="description">Ever since I was really little and just twirling around the house with scarves, 
             I've always had a passion for dance. Whether it was performing on stage with my 
             competitive team, at a rally with my high school class, or in the quad with my kpop 
             dance club, I had so much fun expressing myself through movement. Sometimes the 
             competitive nature of the dance world got to me, but I would turn back to low-pressure 
             dance environments with friends to remind me of the happiness it brought me.
           </p>
-        </div>
         <div id="slideshow-buttons">
           <button class="button" onclick="stop()">Stay on this item.</button>
           <button class="button" id="continue" onclick="start()">Continue the slideshow.</button>
         </div>
       </div>
+    </div>
+    <div id="name-form-container">
+      <form id="name-form" action="/name-data" method="POST">
+        <label for="name">Enter the name you would like to post under:</label><br>
+        <input type="text" name="name" class="input"></input>
+        <br></br>
+        <input type="submit" class="button" value="Submit." onclick="hideChangeName()">
+      </form>
     </div>
     <div id="comment-section" class="box">
       <div id="comment-controls">

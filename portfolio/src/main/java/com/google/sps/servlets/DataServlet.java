@@ -14,32 +14,32 @@
 
 package com.google.sps.servlets;
 
-import java.io.IOException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
+import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import com.google.sps.data.Constants;
-import java.util.Date;
-import java.util.Calendar;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns some example content. */
 @WebServlet("/data")
@@ -62,7 +62,9 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(Constants.TEXT_PARAM, text);
     commentEntity.setProperty(Constants.TIMESTAMP_PARAM, time);
     commentEntity.setProperty(Constants.DATETIME_PARAM, date);
-    commentEntity.setProperty(Constants.LIKES_PARAM, 0);
+    List<String> likes = new ArrayList<>();
+    likes.add(""); // add empty entry to prevent from becoming null as an entity property
+    commentEntity.setProperty(Constants.LIKES_PARAM, likes);
     commentEntity.setProperty(Constants.USER_ID_PARAM, userId);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -72,8 +74,8 @@ public class DataServlet extends HttpServlet {
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query(Constants.COMMENT_ENTITY_PARAM).addSort(Constants.TIMESTAMP_PARAM, 
-                                                            SortDirection.DESCENDING);
+    Query query = new Query(Constants.COMMENT_ENTITY_PARAM)
+        .addSort(Constants.TIMESTAMP_PARAM, SortDirection.DESCENDING);
     Query userQuery = new Query(Constants.USER_ENTITY_PARAM);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -87,9 +89,9 @@ public class DataServlet extends HttpServlet {
       String text = (String) entity.getProperty(Constants.TEXT_PARAM);
       long time = (long) entity.getProperty(Constants.TIMESTAMP_PARAM);
       String date = (String) entity.getProperty(Constants.DATETIME_PARAM);
-      long likes = (long) entity.getProperty(Constants.LIKES_PARAM);
-      String userId = (String) entity.getProperty(Constants.USER_ID_PARAM);
+      List<String> likes = (List<String>) entity.getProperty(Constants.LIKES_PARAM);
 
+      String userId = (String) entity.getProperty(Constants.USER_ID_PARAM);
       String name = "";
       for (Entity userEntity : userResults.asIterable()) {
         if (userId.equals((String) userEntity.getProperty(Constants.ID_PARAM))) {

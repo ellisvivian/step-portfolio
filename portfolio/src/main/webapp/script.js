@@ -60,11 +60,13 @@ function initialDisplay() {
  * Changes the image and description displayed on the page.
  */
 function autoSlideshow() {
-  let experiences = document.getElementsByClassName('experience');
+  let images = document.getElementsByClassName('img-experience');
+  let descriptions = document.getElementsByClassName('descrip-experience');
 
   // Hide all images and descriptions.
-  for (i = 0; i < experiences.length; i ++) {
-    experiences[i].style.display = "none";
+  for (i = 0; i < images.length; i ++) {
+    images[i].style.display = "none";
+    descriptions[i].style.display = "none";
   }
     
   // Update count and display next image and description. 
@@ -73,7 +75,11 @@ function autoSlideshow() {
   } else {
     count ++;
   }
-  experiences[count].style.display = "flex";
+  images[count].style.display = "block";
+  descriptions[count].style.display = "block";
+
+  // Update map display.
+  updateMap(count);
 }
 
 /*
@@ -81,7 +87,7 @@ function autoSlideshow() {
  */
 function start() {
   autoSlideshow();
-  timer = setInterval('autoSlideshow();', 6000)
+  timer = setInterval('autoSlideshow();', 7000)
   document.getElementById('continue').style.display = "none";
 }
 
@@ -109,9 +115,12 @@ function loadComments() {
     for (count = 0; count < max; count ++) {
       commentContainer.appendChild(createComment(comments[count]));
     }
-    document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + '. Total comments: ' + comments.length + '.';
+    document.getElementById('comment-count').innerText = 'Comments displayed: ' + count + 
+        '. Total comments: ' + comments.length + '.';
   });
 }
+
+let currentUserId;
 
 /*
  * Creates an element that represents a comment.
@@ -137,13 +146,13 @@ function createComment(comment) {
   const likesDisplay = document.createElement('div');
   likesDisplay.id = 'likes-display';
 
-  if (comment.likes > 0) {
+  if (comment.likes.length - 1 > 0) {
     const heartIcon = document.createElement('i');
     heartIcon.className = 'fa fa-heart';
     heartIcon.id = "heart-icon";
     likesDisplay.appendChild(heartIcon);
     const likes = document.createElement('p');
-    likes.innerText = comment.likes;
+    likes.innerText = comment.likes.length - 1;
     likes.id = 'likes';
     likesDisplay.appendChild(likes);
   }
@@ -153,6 +162,11 @@ function createComment(comment) {
 
   const likeButton = document.createElement('button');
   likeButton.className = 'button icon-button';
+  if (currentUserId != null) {
+    if (comment.likes.includes(currentUserId)) {
+      likeButton.className = 'button icon-button inverted-button';
+    }
+  }
   const likeIcon = document.createElement('i');
   likeIcon.className = 'fa fa-heart';
   likeButton.appendChild(likeIcon);
@@ -215,7 +229,6 @@ function deleteComment(comment) {
 function likeComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
-  params.append('likes', comment.likes + 1);
   const request = new Request('/like-data', {method: 'POST', body: params});
   const promise = fetch(request);
   promise.then(loadComments);
@@ -225,28 +238,45 @@ function likeComment(comment) {
  * Loads certain comment functionality based on the user's login status.
  */
 function getLoginStatus() {
+
   const promise = fetch('/login-data').then(response => response.json()).then((json) => {
     if (json['loginStatus']) {
+      currentUserId = json['user-id'];
+      const namePromise = fetch('/name-data').then(response => response.text()).then((name) => {
+        if (name.localeCompare('\n') == 0) {
+          changeName();
+        }
+      });
+
       // Display form to submit comment and hide login statement.
       document.getElementById('comment-submission').style.display = 'block';
       document.getElementById('login-statement').style.display = 'none';
 
-      // Add greeting to known user and logout button.
+      // Add greeting to known user, change name button, and logout button.
       const userGreeting = document.getElementById('user-greeting');
       userGreeting.innerHTML = '';
       const greeting = document.createElement('p');
-      greeting.innerText = 'Hi ' + json['userName'] + '!\n' + 
-                            ' ('  + json['userEmail'] + ')';
+      greeting.innerText = 'Hi ' + json['userName'] + '!\n' + ' (' + json['userEmail'] + ')';
+      const changeNameButton = document.createElement('button');
+      changeNameButton.className = 'button';
+      changeNameButton.innerText = 'Change name.';
+      changeNameButton.addEventListener('click', () => {        
+        changeName();
+      });
       const logoutButton = document.createElement('button');
       logoutButton.className = 'button';
+      logoutButton.id = 'logout-button';
       logoutButton.innerText = 'Logout.';
       logoutButton.addEventListener('click', () => {
-        window.location.href = json['logoutUrl']
+        window.location.href = json['logoutUrl'];
       });
       userGreeting.appendChild(greeting);
+      userGreeting.appendChild(changeNameButton);
       userGreeting.appendChild(logoutButton);
 
     } else {
+      currentUserId = null;
+
       // Hide form to submit comment and display login statement.
       document.getElementById('comment-submission').style.display = 'none';
       document.getElementById('login-statement').style.display = 'block';
@@ -266,4 +296,120 @@ function getLoginStatus() {
       loginStatement.appendChild(loginButton);
     }
   });
+}
+
+/*
+ * Presents the user with a form to change their name.
+ */
+function changeName() {
+  document.getElementById('name-form-container').style.display = 'block';
+}
+
+/*
+ * Hides the form for the user to change their name.
+ */
+function hideChangeName() {
+  document.getElementById('name-form-container').style.displau = 'none';
+}
+
+let map;
+let cities = [{lat: 44.972679, lng: -93.279569}, {lat: 29.760488, lng: -95.370274}, {lat: 52.378782, lng: 4.900246}, {lat: 38.544925, lng: -121.740818}];
+let locations = [{lat: 44.915330, lng: -93.211000}, {lat: 29.715189, lng: -95.400813}, {lat: 52.366, lng: 4.886}, {lat: 38.542, lng: -121.760}];
+
+/*
+ * Adds an interactive map to the display.
+ */
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: cities[0],
+    zoom: 11,
+    styles: [
+      {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+      {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+      {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+      {
+        featureType: 'administrative.locality',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#d59563'}]
+      },
+      {
+        featureType: 'poi',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#d59563'}]
+      },
+      {
+        featureType: 'poi.park',
+        elementType: 'geometry',
+        stylers: [{color: '#263c3f'}]
+      },
+      {
+        featureType: 'poi.park',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#6b9a76'}]
+      },
+      {
+        featureType: 'road',
+        elementType: 'geometry',
+        stylers: [{color: '#38414e'}]
+      },
+      {
+        featureType: 'road',
+        elementType: 'geometry.stroke',
+        stylers: [{color: '#212a37'}]
+      },
+      {
+        featureType: 'road',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#9ca5b3'}]
+      },
+      {
+        featureType: 'road.highway',
+        elementType: 'geometry',
+        stylers: [{color: '#746855'}]
+      },
+      {
+        featureType: 'road.highway',
+        elementType: 'geometry.stroke',
+        stylers: [{color: '#1f2835'}]
+      },
+      {
+        featureType: 'road.highway',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#f3d19c'}]
+      },
+      {
+        featureType: 'transit',
+        elementType: 'geometry',
+        stylers: [{color: '#2f3948'}]
+      },
+      {
+        featureType: 'transit.station',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#d59563'}]
+      },
+      {
+        featureType: 'water',
+        elementType: 'geometry',
+        stylers: [{color: '#17263c'}]
+      },
+      {
+        featureType: 'water',
+        elementType: 'labels.text.fill',
+        stylers: [{color: '#515c6d'}]
+      },
+      {
+        featureType: 'water',
+        elementType: 'labels.text.stroke',
+        stylers: [{color: '#17263c'}]
+      }
+    ]
+  });
+}
+
+/*
+ * Updates the map display based on the slideshow image and description.
+ */
+function updateMap(count) {
+  map.panTo(cities[count]);
+  var marker = new google.maps.Marker({position: locations[count], map: map});
 }
