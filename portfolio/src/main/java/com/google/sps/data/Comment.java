@@ -1,4 +1,5 @@
 package com.google.sps.data;
+
 import java.util.Date;
 import java.util.List;
 
