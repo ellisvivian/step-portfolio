@@ -313,6 +313,7 @@ function hideChangeName() {
 }
 
 let map;
+let cities = [{lat: 44.972679, lng: -93.279569}, {lat: 29.760488, lng: -95.370274}, {lat: 52.378782, lng: 4.900246}, {lat: 38.544925, lng: -121.740818}];
 let locations = [{lat: 44.915330, lng: -93.211000}, {lat: 29.715189, lng: -95.400813}, {lat: 52.366, lng: 4.886}, {lat: 38.542, lng: -121.760}];
 
 /*
@@ -320,8 +321,8 @@ let locations = [{lat: 44.915330, lng: -93.211000}, {lat: 29.715189, lng: -95.40
  */
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: locations[0],
-    zoom: 10,
+    center: cities[0],
+    zoom: 11,
     styles: [
       {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
       {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -409,5 +410,6 @@ function initMap() {
  * Updates the map display based on the slideshow image and description.
  */
 function updateMap(count) {
-  map.panTo(locations[count]);
+  map.panTo(cities[count]);
+  var marker = new google.maps.Marker({position: locations[count], map: map});
 }
