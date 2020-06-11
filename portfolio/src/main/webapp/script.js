@@ -60,11 +60,13 @@ function initialDisplay() {
  * Changes the image and description displayed on the page.
  */
 function autoSlideshow() {
-  let experiences = document.getElementsByClassName('experience');
+  let images = document.getElementsByClassName('img-experience');
+  let descriptions = document.getElementsByClassName('descrip-experience');
 
   // Hide all images and descriptions.
-  for (i = 0; i < experiences.length; i ++) {
-    experiences[i].style.display = "none";
+  for (i = 0; i < images.length; i ++) {
+    images[i].style.display = "none";
+    descriptions[i].style.display = "none";
   }
     
   // Update count and display next image and description. 
@@ -73,7 +75,8 @@ function autoSlideshow() {
   } else {
     count ++;
   }
-  experiences[count].style.display = "flex";
+  images[count].style.display = "block";
+  descriptions[count].style.display = "block";
 }
 
 /*
@@ -304,4 +307,16 @@ function changeName() {
  */
 function hideChangeName() {
   document.getElementById('name-form-container').style.displau = 'none';
+}
+
+let map;
+
+/*
+ * Adds an interactive map to the display.
+ */
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8
+  });
 }
