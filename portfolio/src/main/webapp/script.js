@@ -87,7 +87,7 @@ function autoSlideshow() {
  */
 function start() {
   autoSlideshow();
-  timer = setInterval('autoSlideshow();', 7000)
+  timer = setInterval('autoSlideshow();', 8000)
   document.getElementById('continue').style.display = "none";
 }
 
@@ -171,7 +171,7 @@ function createComment(comment) {
   likeIcon.className = 'fa fa-heart';
   likeButton.appendChild(likeIcon);
   likeButton.addEventListener('click', () => {
-    likeComment(comment);  
+    likeComment(comment, currentUserId);  
   });
   commentButtons.appendChild(likeButton);
 
@@ -240,7 +240,7 @@ function likeComment(comment) {
 function getLoginStatus() {
 
   const promise = fetch('/login-data').then(response => response.json()).then((json) => {
-    if (json['loginStatus']) {
+    if (json['loginStatus'].localeCompare('true') == 0) {
       currentUserId = json['user-id'];
       const namePromise = fetch('/name-data').then(response => response.text()).then((name) => {
         if (name.localeCompare('\n') == 0) {
@@ -273,7 +273,6 @@ function getLoginStatus() {
       userGreeting.appendChild(greeting);
       userGreeting.appendChild(changeNameButton);
       userGreeting.appendChild(logoutButton);
-
     } else {
       currentUserId = null;
 
@@ -316,13 +315,16 @@ let map;
 let cities = [{lat: 44.972679, lng: -93.279569}, {lat: 29.760488, lng: -95.370274}, {lat: 52.378782, lng: 4.900246}, {lat: 38.544925, lng: -121.740818}];
 let locations = [{lat: 44.915330, lng: -93.211000}, {lat: 29.715189, lng: -95.400813}, {lat: 52.366, lng: 4.886}, {lat: 38.542, lng: -121.760}];
 
+let infowindows;
+let defaultZoom = 11;
+
 /*
  * Adds an interactive map to the display.
  */
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: cities[0],
-    zoom: 11,
+    zoom: defaultZoom,
     styles: [
       {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
       {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -404,6 +406,26 @@ function initMap() {
       }
     ]
   });
+  let infowindow1 = new google.maps.InfoWindow({
+    content: 'One of our favorite Cuz Unite locations is our cousin\'s house ' + 
+        'in Minneapolis, Minnesota. This picture was taken after a bike ride to ' +
+        'the beautiful Minnehaha Falls.'
+  });
+  let infowindow2 = new google.maps.InfoWindow({
+    content: 'Wiess College is located on the South side of Rice campus. In this photo, ' + 
+        'we are sneaking into a nearby residential college to surprise them with ' + 
+        'our infamously strange "Ubangee" tradition.'
+  });
+  let infowindow3 = new google.maps.InfoWindow({
+    content: 'Amsterdam was the first stop of our travels! Here my brother and I ' + 
+        'are standing on a bridge overlooking one of the city\'s many canals.'
+  });
+  let infowindow4 = new google.maps.InfoWindow({
+    content: 'The first cheer competition of my senior year season took place ' + 
+        'at UC Davis. I originally joined cheer because of its similarity to dance, ' + 
+        'but I ended up loving its more prominent emphasis on teamwork.'
+  });
+  infowindows = [infowindow1, infowindow2, infowindow3, infowindow4];
 }
 
 /*
@@ -411,5 +433,14 @@ function initMap() {
  */
 function updateMap(count) {
   map.panTo(cities[count]);
+  map.setZoom(11);
   var marker = new google.maps.Marker({position: locations[count], map: map});
+  if (count == 0) {
+    infowindows[3].close();
+  } else {
+    infowindows[count - 1].close();
+  }
+  marker.addListener('click', function() {
+    infowindows[count].open(map, marker);
+  });
 }

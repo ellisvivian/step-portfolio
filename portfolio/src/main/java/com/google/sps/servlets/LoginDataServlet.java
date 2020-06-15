@@ -22,6 +22,7 @@ public class LoginDataServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
     Boolean loginStatus = userService.isUserLoggedIn();
+
     StringBuilder jsonBuilder = new StringBuilder("{");
     jsonBuilder.append("\"");
     jsonBuilder.append(Constants.LOGIN_STATUS_PARAM);
@@ -46,11 +47,7 @@ public class LoginDataServlet extends HttpServlet {
     jsonBuilder.delete(jsonBuilder.length() - 2, jsonBuilder.length());
     jsonBuilder.append("}");
 
-    System.out.println("pre-string JSON: " + jsonBuilder);
-
     String json = jsonBuilder.toString();
-
-    System.out.println("post-string JSON: " + json);
 
     response.setContentType("application/json");
     response.getWriter().println(json);

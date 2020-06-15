@@ -103,43 +103,36 @@
 
 #my-experiences {
   margin: 1.5% 3% 3% 1.5%; /* top, right, bottom, left */
-  flex: 2;
+  flex: 4;
 }
 
-.img-map-wrapper {
+#img-map-wrapper {
   display: flex;
+  align-content: space-between;
+  justify-content: center;
 }
 
 #map {
-  width: 504px;
-  height: 378px;
+  width: 450px;
+  height: 340.2px;
 }
 
 .img-experience {
   display: none;
   animation-name: fade;
   animation-duration: 1s;
-  padding-bottom: 10px;
+  padding-right: 3%;
 }
 
 .descrip-experience {
   display: none;
   animation-name: fade;
   animation-duration: 1s;
-  padding-bottom: 10px;
 }
 
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
-}
-
-#img {
-  padding-right: 1.5%;
-}
-
-#description {
-  margin: 0 0 0 0;
 }
 
 #slideshow-buttons {
