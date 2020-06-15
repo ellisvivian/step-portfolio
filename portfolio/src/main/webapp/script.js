@@ -171,7 +171,7 @@ function createComment(comment) {
   likeIcon.className = 'fa fa-heart';
   likeButton.appendChild(likeIcon);
   likeButton.addEventListener('click', () => {
-    likeComment(comment);  
+    likeComment(comment, currentUserId);  
   });
   commentButtons.appendChild(likeButton);
 
@@ -240,7 +240,7 @@ function likeComment(comment) {
 function getLoginStatus() {
 
   const promise = fetch('/login-data').then(response => response.json()).then((json) => {
-    if (json['loginStatus']) {
+    if (json['loginStatus'].localeCompare('true') == 0) {
       currentUserId = json['user-id'];
       const namePromise = fetch('/name-data').then(response => response.text()).then((name) => {
         if (name.localeCompare('\n') == 0) {
@@ -273,7 +273,6 @@ function getLoginStatus() {
       userGreeting.appendChild(greeting);
       userGreeting.appendChild(changeNameButton);
       userGreeting.appendChild(logoutButton);
-
     } else {
       currentUserId = null;
 
@@ -317,6 +316,7 @@ let cities = [{lat: 44.972679, lng: -93.279569}, {lat: 29.760488, lng: -95.37027
 let locations = [{lat: 44.915330, lng: -93.211000}, {lat: 29.715189, lng: -95.400813}, {lat: 52.366, lng: 4.886}, {lat: 38.542, lng: -121.760}];
 
 let infowindows;
+let defaultZoom = 11;
 
 /*
  * Adds an interactive map to the display.
@@ -324,7 +324,7 @@ let infowindows;
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: cities[0],
-    zoom: 11,
+    zoom: defaultZoom,
     styles: [
       {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
       {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},

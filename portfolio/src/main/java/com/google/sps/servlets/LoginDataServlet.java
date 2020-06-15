@@ -22,6 +22,7 @@ public class LoginDataServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
     Boolean loginStatus = userService.isUserLoggedIn();
+
     StringBuilder jsonBuilder = new StringBuilder("{");
     jsonBuilder.append("\"");
     jsonBuilder.append(Constants.LOGIN_STATUS_PARAM);
