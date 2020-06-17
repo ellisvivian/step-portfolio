@@ -26,12 +26,12 @@ public final class FindMeetingQuery {
     int requestedDuration = (int) request.getDuration();
 
     // Get all the conflicting times based on the requested attendees and their planned events.
-    Collection<TimeRange> busyTimes = new HashSet<>();
+    Collection<TimeRange> conflictingEventTimeRanges = new HashSet<>();
     for (Event event : events) {
       Set<String> attendees = event.getAttendees();
       for (String requestedAttendee : requestedAttendees) {
         if (attendees.contains(requestedAttendee)) {
-          busyTimes.add(event.getWhen());
+          conflictingEventTimeRanges.add(event.getWhen());
           break;
         }
       }
@@ -42,22 +42,22 @@ public final class FindMeetingQuery {
     int startTime = TimeRange.START_OF_DAY;
     int duration = requestedDuration;
     while (startTime + duration <= TimeRange.END_OF_DAY + 1) {
-      TimeRange testTime = TimeRange.fromStartDuration(startTime, duration);
+      TimeRange requestEventTime = TimeRange.fromStartDuration(startTime, duration);
       boolean hasConflict = false;
-      for (TimeRange busyTime : busyTimes) {
-        if (testTime.overlaps(busyTime)) {
+      for (TimeRange conflictingEvent : conflictingEventTimeRanges) {
+        if (requestEventTime.overlaps(conflictingEvent)) {
           hasConflict = true;
-          duration = busyTime.start() - startTime;
-          if (duration >= requestedDuration) {
-            freeTimes.add(TimeRange.fromStartDuration(startTime, duration));
+          int shortenedDuration = conflictingEvent.start() - startTime;
+          if (shortenedDuration >= requestedDuration) {
+            freeTimes.add(TimeRange.fromStartDuration(startTime, shortenedDuration));
           }
-          startTime = busyTime.end();
+          startTime = conflictingEvent.end();
           duration = requestedDuration;
         }
       }
       if (!hasConflict) {
         if (startTime + duration == TimeRange.END_OF_DAY + 1) {
-          freeTimes.add(testTime);
+          freeTimes.add(requestEventTime);
         }
         duration += requestedDuration;
       }
