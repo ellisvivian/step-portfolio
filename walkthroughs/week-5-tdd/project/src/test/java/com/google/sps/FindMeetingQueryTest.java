@@ -389,8 +389,9 @@ public final class FindMeetingQueryTest {
   }
 
   @Test
-  public void busyOptionalAttendees() {
-    // Have two optional attendees with no gaps in their schedules. Return no available times.
+  public void overlapOptionalAttendees() {
+    // Have two optional attendees with no aligned gaps in their schedules. 
+    // Return the times where one of them is available.
     //
     // Events  : |---A------| 
     //                  |----B---------|
@@ -408,8 +409,67 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_B);
 
     Collection<TimeRange> actual = query.query(events, request);
+    Collection<TimeRange> expected = 
+        Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0900AM, false),
+            TimeRange.fromStartEnd(TIME_0930AM, TimeRange.END_OF_DAY, true));
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void busyOptionalAttendee() {
+    // Have two optional attendees with busy schedules all day, so there are 
+    // no opportunities for even one attendee to make a meeting.
+    // 
+    // Events  : |----------A----------| 
+    //           |----------B----------|
+    // Day     : |---------------------|
+    // Options :
+
+    Collection<Event> events = Arrays.asList(
+        new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true), 
+            Arrays.asList(PERSON_A)),
+        new Event("Event 2", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true),
+            Arrays.asList(PERSON_B)));
+    
+    MeetingRequest request = new MeetingRequest(Arrays.asList(), DURATION_30_MINUTES);
+    request.addOptionalAttendee(PERSON_A);
+    request.addOptionalAttendee(PERSON_B);
+
+    Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected = Arrays.asList();
 
     Assert.assertEquals(expected, actual);
   }
+
+    @Test
+    public void oneOfTwoAvailableOptionalAttendees() {
+      // Have one mandatory attendees and two optional attendees, where the returned
+      // options are the ones that the mandatory attendee and one optional attendee can make.
+      //
+      // Events  : |--A--||---B---| 
+      //           |----C----|     |--C--|
+      // Day     : |---------------------|
+      // Options :            |----------|
+
+    Collection<Event> events = Arrays.asList(
+        new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0900AM, false), 
+            Arrays.asList(PERSON_A)),
+        new Event("Event 2", TimeRange.fromStartEnd(TIME_0900AM, TIME_1000AM, false),
+            Arrays.asList(PERSON_B)),
+        new Event("Event 3", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0930AM, false),
+            Arrays.asList(PERSON_C)),
+        new Event("Event 4", TimeRange.fromStartEnd(TIME_1000AM, TimeRange.END_OF_DAY, true),
+            Arrays.asList(PERSON_C)));
+    
+    MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A), DURATION_30_MINUTES);
+    request.addOptionalAttendee(PERSON_B);
+    request.addOptionalAttendee(PERSON_C);
+
+    Collection<TimeRange> actual = query.query(events, request);
+    Collection<TimeRange> expected = 
+        Arrays.asList(TimeRange.fromStartEnd(TIME_0930AM, TimeRange.END_OF_DAY, true));
+
+    Assert.assertEquals(expected, actual);
+    }
 }
