@@ -20,25 +20,52 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class FindMeetingQuery {
+  /**
+  * Returns the time ranges in which the requested meeting can be held without conflicting
+  * with any of the attendees schedules (and the optional attendees, if such time ranges exist).
+  */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    // Get the attributes of the requested meeting.
     Collection<String> requestedAttendees = request.getAttendees();
+    Collection<String> requestedOptionalAttendees = request.getOptionalAttendees();
     int requestedDuration = (int) request.getDuration();
 
-    // Get all the conflicting times based on the requested attendees and their planned events.
+    Collection<TimeRange> mandatoryConflictingEventTimeRanges = getConflictingEventTimeRanges(events, requestedAttendees);
+    if (!requestedOptionalAttendees.isEmpty()) {
+      Collection<TimeRange> allConflictingEventTimeRanges = getConflictingEventTimeRanges(events, requestedOptionalAttendees);
+      allConflictingEventTimeRanges.addAll(mandatoryConflictingEventTimeRanges);
+      Collection<TimeRange> allAvailableEventTimeRanges = getAvailableEventTimeRanges(allConflictingEventTimeRanges, 
+        requestedDuration);
+      if (!allAvailableEventTimeRanges.isEmpty() || requestedAttendees.isEmpty()) {
+        return allAvailableEventTimeRanges;
+      }
+    }
+    return getAvailableEventTimeRanges(mandatoryConflictingEventTimeRanges, requestedDuration);
+  }
+
+  /**
+  * Returns the time ranges in which the the requested attendees already have events planned.
+  */
+  public Collection<TimeRange> getConflictingEventTimeRanges(Collection<Event> plannedEvents, 
+      Collection<String> requestedAttendees) {
     Collection<TimeRange> conflictingEventTimeRanges = new HashSet<>();
-    for (Event event : events) {
-      Set<String> attendees = event.getAttendees();
+    for (Event plannedEvent : plannedEvents) {
+      Set<String> eventAttendees = plannedEvent.getAttendees();
       for (String requestedAttendee : requestedAttendees) {
-        if (attendees.contains(requestedAttendee)) {
-          conflictingEventTimeRanges.add(event.getWhen());
+        if (eventAttendees.contains(requestedAttendee)) {
+          conflictingEventTimeRanges.add(plannedEvent.getWhen());
           break;
         }
       }
     }
+    return conflictingEventTimeRanges;
+  }
 
-    // Get all the times of the requested duration or longer that have no overlap with a conflicting time.
-    Collection<TimeRange> freeTimes = new ArrayList<>();
+  /**
+  * Returns the time ranges throughout the day that are greater than or equal to the requested duration
+  * and do not overlap with the time ranges of any conflicting events.
+  */
+  public Collection<TimeRange> getAvailableEventTimeRanges(Collection<TimeRange> conflictingEventTimeRanges, int requestedDuration) {
+    Collection<TimeRange> availableTimes = new ArrayList<>();
     int startTime = TimeRange.START_OF_DAY;
     int duration = requestedDuration;
     while (startTime + duration <= TimeRange.END_OF_DAY + 1) {
@@ -49,7 +76,7 @@ public final class FindMeetingQuery {
           hasConflict = true;
           int shortenedDuration = conflictingEvent.start() - startTime;
           if (shortenedDuration >= requestedDuration) {
-            freeTimes.add(TimeRange.fromStartDuration(startTime, shortenedDuration));
+            availableTimes.add(TimeRange.fromStartDuration(startTime, shortenedDuration));
           }
           startTime = conflictingEvent.end();
           duration = requestedDuration;
@@ -57,11 +84,11 @@ public final class FindMeetingQuery {
       }
       if (!hasConflict) {
         if (startTime + duration == TimeRange.END_OF_DAY + 1) {
-          freeTimes.add(requestEventTime);
+          availableTimes.add(requestEventTime);
         }
         duration += requestedDuration;
       }
     }
-    return freeTimes;
+    return availableTimes;
   }
 }
