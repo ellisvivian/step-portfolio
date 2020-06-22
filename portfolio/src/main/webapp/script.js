@@ -226,12 +226,23 @@ function deleteComment(comment) {
 /*
  * Adds a like to the specified comment.
  */
-function likeComment(comment) {
-  const params = new URLSearchParams();
-  params.append('id', comment.id);
-  const request = new Request('/like-data', {method: 'POST', body: params});
-  const promise = fetch(request);
-  promise.then(loadComments);
+function likeComment(comment, currentUserId) {
+  if (currentUserId != null) {
+    const params = new URLSearchParams();
+    params.append('id', comment.id);
+    const request = new Request('/like-data', {method: 'POST', body: params});
+    const promise = fetch(request);
+    promise.then(loadComments);
+  } else {
+    document.getElementById('like-warning').style.display = 'block';
+  }
+}
+
+/*
+ * Hides the like warning once the user hits "OK".
+ */
+function hideLikeWarning() {
+  document.getElementById('like-warning').style.display = 'none';
 }
 
 /*
