@@ -11,15 +11,17 @@ public final class Comment {
   private final String commentText;
   private final long timeStamp;
   private final String dateTime;
-  private final List<String> likes; 
+  private final List<String> likes;
+  private final String userId; 
 
   public Comment(long id, String name, String commentText, 
-      long timeStamp, String dateTime, List<String> likes) {
+      long timeStamp, String dateTime, List<String> likes, String userId) {
     this.id = id;
     this.name = name;
     this.commentText = commentText;
     this.timeStamp = timeStamp;
     this.dateTime = dateTime;
     this.likes = likes;
+    this.userId = userId;
   }
 }

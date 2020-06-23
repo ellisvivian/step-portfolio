@@ -175,15 +175,17 @@ function createComment(comment) {
   });
   commentButtons.appendChild(likeButton);
 
-  const deleteButton = document.createElement('button');
-  deleteButton.className = 'button icon-button';
-  const trashIcon = document.createElement('i');
-  trashIcon.className = 'fa fa-trash';
-  deleteButton.appendChild(trashIcon);
-  deleteButton.addEventListener('click', () => {
+  if (comment.userId.localeCompare(currentUserId) == 0) {
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'button icon-button';
+    const trashIcon = document.createElement('i');
+    trashIcon.className = 'fa fa-trash';
+    deleteButton.appendChild(trashIcon);
+    deleteButton.addEventListener('click', () => {
     deleteComment(comment);
-  });
-  commentButtons.appendChild(deleteButton);
+    });
+    commentButtons.appendChild(deleteButton);
+  }
 
   bottomWrapper.appendChild(likesDisplay);
   bottomWrapper.appendChild(commentButtons);
