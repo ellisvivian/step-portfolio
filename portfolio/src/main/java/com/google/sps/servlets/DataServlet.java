@@ -100,7 +100,7 @@ public class DataServlet extends HttpServlet {
         }
       }
 
-      Comment comment = new Comment(id, name, text, time, date, likes);
+      Comment comment = new Comment(id, name, text, time, date, likes, userId);
       comments.add(comment);
     }
 

@@ -175,15 +175,17 @@ function createComment(comment) {
   });
   commentButtons.appendChild(likeButton);
 
-  const deleteButton = document.createElement('button');
-  deleteButton.className = 'button icon-button';
-  const trashIcon = document.createElement('i');
-  trashIcon.className = 'fa fa-trash';
-  deleteButton.appendChild(trashIcon);
-  deleteButton.addEventListener('click', () => {
+  if (comment.userId.localeCompare(currentUserId) == 0) {
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'button icon-button';
+    const trashIcon = document.createElement('i');
+    trashIcon.className = 'fa fa-trash';
+    deleteButton.appendChild(trashIcon);
+    deleteButton.addEventListener('click', () => {
     deleteComment(comment);
-  });
-  commentButtons.appendChild(deleteButton);
+    });
+    commentButtons.appendChild(deleteButton);
+  }
 
   bottomWrapper.appendChild(likesDisplay);
   bottomWrapper.appendChild(commentButtons);
@@ -226,12 +228,23 @@ function deleteComment(comment) {
 /*
  * Adds a like to the specified comment.
  */
-function likeComment(comment) {
-  const params = new URLSearchParams();
-  params.append('id', comment.id);
-  const request = new Request('/like-data', {method: 'POST', body: params});
-  const promise = fetch(request);
-  promise.then(loadComments);
+function likeComment(comment, currentUserId) {
+  if (currentUserId != null) {
+    const params = new URLSearchParams();
+    params.append('id', comment.id);
+    const request = new Request('/like-data', {method: 'POST', body: params});
+    const promise = fetch(request);
+    promise.then(loadComments);
+  } else {
+    document.getElementById('like-warning').style.display = 'block';
+  }
+}
+
+/*
+ * Hides the like warning once the user hits "OK".
+ */
+function hideLikeWarning() {
+  document.getElementById('like-warning').style.display = 'none';
 }
 
 /*
